@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ~
+ln -s config/.bash_aliases .
+ln -s config/.gitconfig .
+ln -s config/.vimrc .
+
