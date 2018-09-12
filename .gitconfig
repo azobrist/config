@@ -12,3 +12,4 @@
 	name = AdamZ
 [push]
 	followingTags = true
+	default = simple
