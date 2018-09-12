@@ -1,7 +1,24 @@
 #!/bin/bash
+INIT=configured
+if [ -f "$INIT" ]
+then
+	exit 1
+fi
 
+mkdir old
 cd ~
-ln -s config/.bash_aliases .
-ln -s config/.gitconfig .
-ln -s config/.vimrc .
+FILE=.bash_aliases
+if [ -f "$FILE" ]
+then
+	mv $FILE config/old/$FILE
+fi
+ln -s config/$FILE .
 
+FILE=.gitconfig
+if [ -f "$FILE" ]
+then
+	mv $FILE config/old/$FILE
+fi
+ln -s config/$FILE .
+
+touch config/$INIT

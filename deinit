@@ -1,0 +1,25 @@
+#!/bin/bash
+INIT=configured
+if [ ! -f "$INIT" ]
+then
+	exit 1
+fi
+
+cd old
+FILE=.bash_aliases
+rm ~/$FILE
+if [ -f "$FILE" ]
+then
+	cp $FILE ~
+	rm $FILE
+fi
+
+FILE=.gitconfig
+rm ~/$FILE
+if [ -f "$FILE" ]
+then
+	cp $FILE ~
+	rm $FILE
+fi
+
+rm ../$INIT
