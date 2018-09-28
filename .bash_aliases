@@ -41,7 +41,7 @@ savepi(){
 	then
 		git add .
 		git commit -m "saved: $1"
-		git push pi master
+		git push
 	else
 		echo "Sever not online @$IP"
 	fi
