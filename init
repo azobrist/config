@@ -22,3 +22,4 @@ fi
 ln -s config/$FILE .
 
 touch config/$INIT
+source .bashrc

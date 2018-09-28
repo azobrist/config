@@ -6,7 +6,11 @@ alias fd="find . -name "
 alias cd..="cd .."
 cloneoffice(){
 	IP="10.70.16.118"
-	ping -q -c1 $IP > /dev/null
+	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+		ping $IP -n 1 > /dev/null
+	else
+		ping -q -c1 $IP > /dev/null
+	fi
 	if [ $? -eq 0 ]; then
 		git clone git@$IP:~/$1.git
 	else
@@ -15,7 +19,11 @@ cloneoffice(){
 }
 clonepi(){
 	IP="10.70.56.40"
-	ping -q -c1 $IP > /dev/null 
+	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+		ping $IP -n 1 > /dev/null
+	else
+		ping -q -c1 $IP > /dev/null
+	fi 
 	if [ $? -eq 0 ]; then
 		git clone git@$IP:~/$1.git
 	else
@@ -24,7 +32,11 @@ clonepi(){
 }
 savepi(){
 	IP="10.70.56.40"
-	ping -q -c1 $IP > /dev/null
+	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+		ping $IP -n 1 > /dev/null
+	else
+		ping -q -c1 $IP > /dev/null
+	fi 
 	if [ $? -eq 0 ] 
 	then
 		git add .
@@ -46,5 +58,6 @@ gitignore(){
 	fi
 }
 shellme(){
-	history | tail -$1 | cut -c 8- > $2.sh
+	echo "#!/bin/bash" > $2.sh
+	history | tail -$1 | cut -c 8- >> $2.sh
 }
