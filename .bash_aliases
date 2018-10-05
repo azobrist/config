@@ -6,12 +6,7 @@ alias fd="find . -name "
 alias cd..="cd .."
 cloneoffice(){
 	IP="10.70.16.118"
-	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 > /dev/null
-	else
-		ping -q -c1 $IP > /dev/null
-	fi
-	if [ $? -eq 0 ]; then
+	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git clone git@$IP:~/$1.git
 		cd $1
 		git remote add office git@$IP:~/$1.git
@@ -21,12 +16,7 @@ cloneoffice(){
 }
 clonepi(){
 	IP="10.70.56.40"
-	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 > /dev/null
-	else
-		ping -q -c1 $IP > /dev/null
-	fi 
-	if [ $? -eq 0 ]; then
+	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git clone git@$IP:~/$1.git
 		cd $1
 		git remote add pi git@$IP:~/$1.git
@@ -44,31 +34,9 @@ savefixes(){
 		echo "Sever not online @$IP"
 	fi
 }
-savepi(){
-	IP="10.70.56.40"
-	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 > /dev/null
-	else
-		ping -q -c1 $IP > /dev/null
-	fi 
-	if [ $? -eq 0 ] 
-	then
-		git add .
-		git commit -m "saved: $1"
-		git push pi master
-	else
-		echo "Sever not online @$IP"
-	fi
-}
 updatepi(){
 	IP="10.70.56.40"
-	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 > /dev/null
-	else
-		ping -q -c1 $IP > /dev/null
-	fi 
-	if [ $? -eq 0 ] 
-	then
+	if [ "$(knockknock $IP)" == "who's there??" ];then 
 		git pull pi master
 	else
 		echo "Sever not online @$IP"
