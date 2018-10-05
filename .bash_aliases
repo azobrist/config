@@ -34,6 +34,16 @@ clonepi(){
 		echo "Server not online @$IP"
 	fi
 }
+savefixes{
+	IP="10.70.56.40"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		git add .
+		git commit -m "fixes - no time to explain"
+		git push pi master
+	else
+		echo "Sever not online @$IP"
+	fi
+}
 savepi(){
 	IP="10.70.56.40"
 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
@@ -78,4 +88,26 @@ gitignore(){
 shellme(){
 	echo "#!/bin/bash" > $2.sh
 	history | tail -$1 | cut -c 8- >> $2.sh
+}
+knockknock(){
+	IP="$1"
+	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+		ping $IP -n 1 > /dev/null
+	else
+		ping -q -c1 $IP > /dev/null
+	fi
+	if [ $? -eq 0 ] 
+	then
+		echo "who's there??"
+	else
+		echo ""
+	fi 
+}
+getnvidia(){
+	IP="10.70.56.37"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		scp nvidia@$IP:~/$1 .
+	else
+		echo "Sever not online @$IP"
+	fi
 }
