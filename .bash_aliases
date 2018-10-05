@@ -13,6 +13,8 @@ cloneoffice(){
 	fi
 	if [ $? -eq 0 ]; then
 		git clone git@$IP:~/$1.git
+		cd $1
+		git remote add office git@$IP:~/$1.git
 	else
 		echo "Server not online @$IP"
 	fi
@@ -26,6 +28,8 @@ clonepi(){
 	fi 
 	if [ $? -eq 0 ]; then
 		git clone git@$IP:~/$1.git
+		cd $1
+		git remote add pi git@$IP:~/$1.git
 	else
 		echo "Server not online @$IP"
 	fi
@@ -41,7 +45,7 @@ savepi(){
 	then
 		git add .
 		git commit -m "saved: $1"
-		git push
+		git push pi master
 	else
 		echo "Sever not online @$IP"
 	fi
