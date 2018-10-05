@@ -50,6 +50,20 @@ savepi(){
 		echo "Sever not online @$IP"
 	fi
 }
+updatepi(){
+	IP="10.70.56.40"
+	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+		ping $IP -n 1 > /dev/null
+	else
+		ping -q -c1 $IP > /dev/null
+	fi 
+	if [ $? -eq 0 ] 
+	then
+		git pull pi master
+	else
+		echo "Sever not online @$IP"
+	fi
+}
 gitignore(){
 	if [ -d .git ]; then
 		if [ ! -f ./.gitignore ]; then
