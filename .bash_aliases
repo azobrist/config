@@ -34,7 +34,7 @@ clonepi(){
 		echo "Server not online @$IP"
 	fi
 }
-savefixes{
+savefixes(){
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git add .
