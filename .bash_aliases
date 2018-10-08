@@ -79,3 +79,11 @@ getnvidia(){
 		echo "Sever not online @$IP"
 	fi
 }
+putnvidia(){
+	IP="10.70.56.37"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		scp $1 nvidia@$IP:~/$2
+	else
+		echo "Sever not online @$IP"
+	fi
+}
