@@ -7,9 +7,9 @@ alias cd..="cd .."
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		git clone git@$IP:~/$1.git
+		git clone git@$IP:/opt/git/$1.git
 		cd $1
-		git remote add office git@$IP:~/$1.git
+		git remote add office git@$IP:/opt/git/$1.git
 	else
 		echo "Server not online @$IP"
 	fi
@@ -30,6 +30,16 @@ savefixes(){
 		git add .
 		git commit -m "fixes - no time to explain"
 		git push pi master
+	else
+		echo "Sever not online @$IP"
+	fi
+}
+savetesting(){
+	IP="10.70.56.40"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		git add .
+		git commit -m "fixes - no time to explain"
+		git push pi testing
 	else
 		echo "Sever not online @$IP"
 	fi
