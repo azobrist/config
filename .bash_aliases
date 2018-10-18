@@ -36,13 +36,14 @@ savefixes(){
 }
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="On branch")print $(i+1)}')
+	echo "On branch $BRANCH"
 	git add .
 	git commit -m "$1"
 	git push pi $BRANCH
 }
 gitupdate(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="On branch")print $(i+1)}')
-	echo "In branch $BRANCH"
+	echo "On branch $BRANCH"
 	git pull pi $BRANCH
 }
 savetesting(){
