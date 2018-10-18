@@ -3,7 +3,7 @@ INIT=configured
 if [ -f "$INIT" ]
 then
 	echo "re-initing and exiting"
-	brc
+	exec bash
 	exit 1
 fi
 
@@ -24,4 +24,5 @@ fi
 ln -s config/$FILE .
 
 touch config/$INIT
-brc
+exec bash
+
