@@ -4,6 +4,7 @@ alias hist="history "
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias fd="find . -name "
 alias cd..="cd .."
+alias brc='source ~/.bashrc'
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
