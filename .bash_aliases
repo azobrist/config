@@ -5,9 +5,6 @@ alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias fd="find . -name "
 alias cd..="cd .."
 alias brc='source ~/.bashrc'
-runhistg(){
-	!$(histg $1 | tail -2 | awk 'NR==1{print $1}')
-}
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
@@ -28,60 +25,33 @@ clonepi(){
 		echo "Server not online @$IP"
 	fi
 }
-savefixes(){
-	IP="10.70.56.40"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		git add .
-		git commit -m "fixes - no time to explain"
-		git push pi master
-	else
-		echo "Sever not online @$IP"
-	fi
-}
 gitfixes(){
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		gitshortdiff > gitfixes.log
 		git add .
 		git commit -m "random fixes - see gitfixes.log"
-		git push pi master
+		git push pi $BRANCH
 	else
 		echo "Sever not online @$IP"
 	fi
 }
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-	echo "On branch $BRANCH"
+	echo "Finishing $BRANCH"
 	git add .
 	git commit -m "$1"
 	git push pi $BRANCH
 }
 gitupdate(){
 	if [ $# -eq 1 ]; then
-		git pull pi $1
+		BRANCH=$1
 	else
 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-		echo "Updating $BRANCH"
-		git pull pi $BRANCH
-	fi	
-}
-savetesting(){
-	IP="10.70.56.40"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		git add .
-		git commit -m "fixes - no time to explain"
-		git push pi testing
-	else
-		echo "Sever not online @$IP"
 	fi
-}
-updatepi(){
-	IP="10.70.56.40"
-	if [ "$(knockknock $IP)" == "who's there??" ];then 
-		git pull pi master
-	else
-		echo "Sever not online @$IP"
-	fi
+	echo "Updating $BRANCH"
+	git pull pi $BRANCH	
 }
 gitignore(){
 	if [ -d .git ]; then

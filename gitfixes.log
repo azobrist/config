@@ -1,0 +1,75 @@
+.bash_aliases:5: alias fd="find . -name "
+.bash_aliases:6: alias cd..="cd .."
+.bash_aliases:7: alias brc='source ~/.bashrc'
+.bash_aliases:8:-runhistg(){
+.bash_aliases:8:-	!$(histg $1 | tail -2 | awk 'NR==1{print $1}')
+.bash_aliases:8:-}
+.bash_aliases:8: cloneoffice(){
+.bash_aliases:9: 	IP="10.70.16.118"
+.bash_aliases:10: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:25: 		echo "Server not online @$IP"
+.bash_aliases:26: 	fi
+.bash_aliases:27: }
+.bash_aliases:28:-savefixes(){
+.bash_aliases:28:-	IP="10.70.56.40"
+.bash_aliases:28:-	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:28:-		git add .
+.bash_aliases:28:-		git commit -m "fixes - no time to explain"
+.bash_aliases:28:-		git push pi master
+.bash_aliases:28:-	else
+.bash_aliases:28:-		echo "Sever not online @$IP"
+.bash_aliases:28:-	fi
+.bash_aliases:28:-}
+.bash_aliases:28: gitfixes(){
+.bash_aliases:29:+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:30: 	IP="10.70.56.40"
+.bash_aliases:31: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:32: 		gitshortdiff > gitfixes.log
+.bash_aliases:33: 		git add .
+.bash_aliases:34: 		git commit -m "random fixes - see gitfixes.log"
+.bash_aliases:35:-		git push pi master
+.bash_aliases:35:+		git push pi $BRANCH
+.bash_aliases:36: 	else
+.bash_aliases:37: 		echo "Sever not online @$IP"
+.bash_aliases:38: 	fi
+.bash_aliases:39: }
+.bash_aliases:40: gitfinish(){
+.bash_aliases:41: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:42:-	echo "On branch $BRANCH"
+.bash_aliases:42:+	echo "Finishing $BRANCH"
+.bash_aliases:43: 	git add .
+.bash_aliases:44: 	git commit -m "$1"
+.bash_aliases:45: 	git push pi $BRANCH
+.bash_aliases:46: }
+.bash_aliases:47: gitupdate(){
+.bash_aliases:48: 	if [ $# -eq 1 ]; then
+.bash_aliases:49:-		git pull pi $1
+.bash_aliases:49:+		BRANCH=$1
+.bash_aliases:50: 	else
+.bash_aliases:51: 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:52:-		echo "Updating $BRANCH"
+.bash_aliases:52:-		git pull pi $BRANCH
+.bash_aliases:52:-	fi	
+.bash_aliases:52:-}
+.bash_aliases:52:-savetesting(){
+.bash_aliases:52:-	IP="10.70.56.40"
+.bash_aliases:52:-	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:52:-		git add .
+.bash_aliases:52:-		git commit -m "fixes - no time to explain"
+.bash_aliases:52:-		git push pi testing
+.bash_aliases:52:-	else
+.bash_aliases:52:-		echo "Sever not online @$IP"
+.bash_aliases:52:-	fi
+.bash_aliases:52:-}
+.bash_aliases:52:-updatepi(){
+.bash_aliases:52:-	IP="10.70.56.40"
+.bash_aliases:52:-	if [ "$(knockknock $IP)" == "who's there??" ];then 
+.bash_aliases:52:-		git pull pi master
+.bash_aliases:52:-	else
+.bash_aliases:52:-		echo "Sever not online @$IP"
+.bash_aliases:52: 	fi
+.bash_aliases:53:+	echo "Updating $BRANCH"
+.bash_aliases:54:+	git pull pi $BRANCH	
+.bash_aliases:55: }
+.bash_aliases:56: gitignore(){
+.bash_aliases:57: 	if [ -d .git ]; then
