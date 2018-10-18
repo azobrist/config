@@ -3,7 +3,7 @@ INIT=configured
 if [ -f "$INIT" ]
 then
 	echo "re-initing and exiting"
-	source ~/.bashrc
+	source ../.bashrc
 	exit 1
 fi
 
