@@ -34,6 +34,12 @@ savefixes(){
 		echo "Sever not online @$IP"
 	fi
 }
+gitfinish(){
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="branch")print $(i+1)}')
+	git add .
+	git commit -m "$1"
+	git push pi $BRANCH
+}
 savetesting(){
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
