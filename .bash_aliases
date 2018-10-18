@@ -30,7 +30,7 @@ gitfixes(){
 	echo "Fixing $BRANCH"
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		gitshortdiff > gitfixes.log
+		gitshortdiff | sed /^gitfixes/d > gitfixes.log
 		git add .
 		git commit -m "random fixes - see gitfixes.log"
 		git push pi $BRANCH
