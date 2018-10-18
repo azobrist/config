@@ -46,9 +46,13 @@ gitfinish(){
 	git push pi $BRANCH
 }
 gitupdate(){
-	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-	echo "On branch $BRANCH"
-	git pull pi $BRANCH
+	if [ $# -eq 1 ]; then
+		git pull pi $1
+	else
+		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+		echo "Updating $BRANCH"
+		git pull pi $BRANCH
+	fi	
 }
 savetesting(){
 	IP="10.70.56.40"
