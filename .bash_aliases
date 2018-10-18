@@ -38,6 +38,17 @@ savefixes(){
 		echo "Sever not online @$IP"
 	fi
 }
+gitfixes(){
+	IP="10.70.56.40"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		gitshortdiff > gitfixes.log
+		git add .
+		git commit -m "random fixes - see gitfixes.log"
+		git push pi master
+	else
+		echo "Sever not online @$IP"
+	fi
+}
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "On branch $BRANCH"
@@ -116,4 +127,26 @@ putnvidia(){
 	else
 		echo "Sever not online @$IP"
 	fi
+}
+gitshortdiff() {
+	git diff | diff-lines
+}
+diff-lines() {
+    local path=
+    local line=
+    while read; do
+        esc=$'\033'
+        if [[ $REPLY =~ ---\ (a/)?.* ]]; then
+            continue
+        elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
+            path=${BASH_REMATCH[2]}
+        elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
+            line=${BASH_REMATCH[2]}
+        elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
+            echo "$path:$line:$REPLY"
+            if [[ ${BASH_REMATCH[2]} != - ]]; then
+                ((line++))
+            fi
+        fi
+    done
 }
