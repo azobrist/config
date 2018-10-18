@@ -35,13 +35,13 @@ savefixes(){
 	fi
 }
 gitfinish(){
-	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="branch")print $(i+1)}')
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="On branch")print $(i+1)}')
 	git add .
 	git commit -m "$1"
 	git push pi $BRANCH
 }
 gitupdate(){
-	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="branch")print $(i+1)}')
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="On branch")print $(i+1)}')
 	echo "In branch $BRANCH"
 	git pull pi $BRANCH
 }
