@@ -42,7 +42,7 @@ gitfinish(){
 	git push pi $BRANCH
 }
 gitupdate(){
-	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="On branch")print $(i+1)}')
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "On branch $BRANCH"
 	git pull pi $BRANCH
 }
