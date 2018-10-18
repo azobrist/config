@@ -27,6 +27,7 @@ clonepi(){
 }
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+	echo "Fixing $BRANCH"
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		gitshortdiff > gitfixes.log
