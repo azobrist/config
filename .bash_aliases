@@ -40,6 +40,10 @@ gitfinish(){
 	git commit -m "$1"
 	git push pi $BRANCH
 }
+gitupdate(){
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($i=="branch")print $(i+1)}')
+	git pull pi $BRANCH
+}
 savetesting(){
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
