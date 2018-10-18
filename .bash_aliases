@@ -5,6 +5,9 @@ alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias fd="find . -name "
 alias cd..="cd .."
 alias brc='source ~/.bashrc'
+runhistg(){
+	!$(histg $1 | tail -2 | awk 'NR==1{print $1}')
+}
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
