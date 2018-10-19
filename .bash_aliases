@@ -83,18 +83,22 @@ knockknock(){
 		echo ""
 	fi 
 }
-getnvidia(){
-	IP="10.70.56.37"
+getdev(){
+	DEV=$1
+	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+	echo "getting file from $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp nvidia@$IP:~/$1 .
+		scp $DEV@$IP:~/$2 .
 	else
 		echo "Sever not online @$IP"
 	fi
 }
-putnvidia(){
-	IP="10.70.56.37"
+putdev(){
+	DEV=$1
+	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+	echo "putting $(basename $2) to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $1 nvidia@$IP:~/$2
+		scp $(basename $2) $DEV@$IP:~/$2
 	else
 		echo "Sever not online @$IP"
 	fi
