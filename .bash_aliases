@@ -86,7 +86,12 @@ gitupdate(){
 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	fi
 	echo "Updating $BRANCH"
-	git fetch pi $BRANCH	
+	if [ $BRANCH == "master" ];then
+		echo "Fetching $BRANCH"
+		git fetch pi $BRANCH
+	else
+		echo "Updating current branch - $BRANCH"
+		git pull pi $BRANCH	
 }
 gitignore(){
 	if [ -d .git ]; then
