@@ -31,9 +31,9 @@ gitfixes(){
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-		echo $(git diff --name-only)
+		FILES=$(git diff --name-only)
 		git add .
-		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
+		git commit -m "random fixes - $FILES"
 		git push pi $BRANCH
 	else
 		echo "Sever not online @$IP"
