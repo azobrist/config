@@ -1,18 +1,7 @@
 .bash_aliases:32: 	if [ "$(knockknock $IP)" == "who's there??" ];then
 .bash_aliases:33: 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
 .bash_aliases:34: 		git add .
-.bash_aliases:35:-		git commit -m "random fixes - see gitfixes.log"
-.bash_aliases:35:+		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
-.bash_aliases:36: 		git push pi $BRANCH
-.bash_aliases:37: 	else
-.bash_aliases:38: 		echo "Sever not online @$IP"
-.bash_aliases:84: 	fi 
-.bash_aliases:85: }
-.bash_aliases:86: getdev(){
-.bash_aliases:87:+	if [ $# -eq 0 ]; then
-.bash_aliases:88:+		echo "getdev <device> <path/to/file>"
-.bash_aliases:89:+		exit 1
-.bash_aliases:90:+	fi
-.bash_aliases:91: 	DEV=$1
-.bash_aliases:92: 	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
-.bash_aliases:93: 	echo "getting file from $DEV@$IP:~/$2"
+.bash_aliases:35:+		echo $(git diff --name-only)
+.bash_aliases:36: 		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
+.bash_aliases:37: 		git push pi $BRANCH
+.bash_aliases:38: 	else
