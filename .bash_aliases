@@ -39,6 +39,19 @@ gitfixes(){
 		echo "Sever not online @$IP"
 	fi
 }
+gittest(){
+	if [ $# -eq 1 ]; then
+		BRANCH=$1
+	else
+		BRANCH="feature_test"
+	fi
+	echo "Testing $BRANCH"
+	git branch $BRANCH
+	git co $BRANCH
+	git add .
+	git commit -m "first commit of feature branch - $BRANCH"
+	git push pi $BRANCH
+}
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Finishing $BRANCH"
@@ -107,6 +120,16 @@ putdev(){
 	else
 		echo "Sever not online @$IP"
 	fi
+}
+connect(){
+	DEV=$1
+	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+	echo "connecting to $DEV terminal"
+	if [ "$(knockknock $IP)" == "who's there??" ];then
+		ssh $DEV@$IP
+	else
+		echo "Sever not online @$IP"
+	fi	
 }
 gitshortdiff() {
 	git diff | diff-lines
