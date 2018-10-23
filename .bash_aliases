@@ -31,8 +31,8 @@ gitfixes(){
 	IP="10.70.56.40"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-		git add .
 		echo $(git diff --name-only)
+		git add .
 		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
 		git push pi $BRANCH
 	else

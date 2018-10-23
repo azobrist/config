@@ -1,7 +1,9 @@
+.bash_aliases:31: 	IP="10.70.56.40"
 .bash_aliases:32: 	if [ "$(knockknock $IP)" == "who's there??" ];then
 .bash_aliases:33: 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-.bash_aliases:34: 		git add .
-.bash_aliases:35:+		echo $(git diff --name-only)
+.bash_aliases:34:-		git add .
+.bash_aliases:34: 		echo $(git diff --name-only)
+.bash_aliases:35:+		git add .
 .bash_aliases:36: 		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
 .bash_aliases:37: 		git push pi $BRANCH
 .bash_aliases:38: 	else
