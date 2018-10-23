@@ -32,7 +32,7 @@ gitfixes(){
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
 		git add .
-		git commit -m "random fixes - see gitfixes.log"
+		git commit -m "random fixes - see gitfixes.log $(git diff --name-only)"
 		git push pi $BRANCH
 	else
 		echo "Sever not online @$IP"
@@ -84,6 +84,10 @@ knockknock(){
 	fi 
 }
 getdev(){
+	if [ $# -eq 0 ]; then
+		echo "getdev <device> <path/to/file>"
+		exit 1
+	fi
 	DEV=$1
 	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
 	echo "getting file from $DEV@$IP:~/$2"
