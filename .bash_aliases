@@ -53,7 +53,7 @@ gitfixes(){
 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
 		FILES=$(git diff --name-only)
 		git add .
-		git commit -m "random fixes - $FILES"
+		git commit -m "random fixes - \n$FILES"
 		git push pi $BRANCH
 	else
 		echo "Sever not online @$IP"

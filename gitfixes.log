@@ -1,19 +1,8 @@
-.bash_aliases:82: gitupdate(){
-.bash_aliases:83: 	if [ $# -eq 1 ]; then
-.bash_aliases:84: 		BRANCH=$1
-.bash_aliases:85:-	else
-.bash_aliases:85:-		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:85:-	fi
-.bash_aliases:85:-	echo "Updating $BRANCH"
-.bash_aliases:85:-	if [ $BRANCH == "master" ];then
-.bash_aliases:85: 		echo "Fetching $BRANCH"
-.bash_aliases:86: 		git fetch pi $BRANCH
-.bash_aliases:87: 	else
-.bash_aliases:88:-		echo "Updating current branch - $BRANCH"
-.bash_aliases:88:-		git pull pi $BRANCH	
-.bash_aliases:88:+		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:89:+		echo "Updating $BRANCH"
-.bash_aliases:90:+		git pull pi $BRANCH
-.bash_aliases:91: 	fi
-.bash_aliases:92: }
-.bash_aliases:93: gitignore(){
+.bash_aliases:53: 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
+.bash_aliases:54: 		FILES=$(git diff --name-only)
+.bash_aliases:55: 		git add .
+.bash_aliases:56:-		git commit -m "random fixes - $FILES"
+.bash_aliases:56:+		git commit -m "random fixes - n$FILES"
+.bash_aliases:57: 		git push pi $BRANCH
+.bash_aliases:58: 	else
+.bash_aliases:59: 		echo "Sever not online @$IP"
