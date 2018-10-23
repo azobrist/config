@@ -30,7 +30,7 @@ gitcreate(){
 	mkdir $PROJ && cd $PROJ
 	git init
 }
-gitremoteinit(){
+gitorigin(){
 	PROJ=$(basename $(pwd))
 	mkdir $PROJ.git && cd $PROJ.git
 	git init --bare
@@ -86,7 +86,7 @@ gitupdate(){
 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	fi
 	echo "Updating $BRANCH"
-	git pull pi $BRANCH	
+	git fetch pi $BRANCH	
 }
 gitignore(){
 	if [ -d .git ]; then
