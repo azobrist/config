@@ -82,16 +82,12 @@ gitfinish(){
 gitupdate(){
 	if [ $# -eq 1 ]; then
 		BRANCH=$1
-	else
-		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-	fi
-	echo "Updating $BRANCH"
-	if [ $BRANCH == "master" ];then
 		echo "Fetching $BRANCH"
 		git fetch pi $BRANCH
 	else
-		echo "Updating current branch - $BRANCH"
-		git pull pi $BRANCH	
+		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+		echo "Updating $BRANCH"
+		git pull pi $BRANCH
 	fi
 }
 gitignore(){
