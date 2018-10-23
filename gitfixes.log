@@ -1,35 +1,73 @@
-.bash_aliases:39: 		echo "Sever not online @$IP"
-.bash_aliases:40: 	fi
-.bash_aliases:41: }
-.bash_aliases:42:+gittest(){
-.bash_aliases:43:+	if [ $# -eq 1 ]; then
-.bash_aliases:44:+		BRANCH=$1
-.bash_aliases:45:+	else
-.bash_aliases:46:+		BRANCH="feature_test"
-.bash_aliases:47:+	fi
-.bash_aliases:48:+	echo "Testing $BRANCH"
-.bash_aliases:49:+	git branch $BRANCH
-.bash_aliases:50:+	git co $BRANCH
-.bash_aliases:51:+	git add .
-.bash_aliases:52:+	git commit -m "first commit of feature branch - $BRANCH"
-.bash_aliases:53:+	git push pi $BRANCH
-.bash_aliases:54:+}
-.bash_aliases:55: gitfinish(){
-.bash_aliases:56: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:57: 	echo "Finishing $BRANCH"
-.bash_aliases:121: 		echo "Sever not online @$IP"
-.bash_aliases:122: 	fi
-.bash_aliases:123: }
-.bash_aliases:124:+connect(){
-.bash_aliases:125:+	DEV=$1
-.bash_aliases:126:+	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
-.bash_aliases:127:+	echo "connecting to $DEV terminal"
-.bash_aliases:128:+	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:129:+		ssh $DEV@$IP
-.bash_aliases:130:+	else
-.bash_aliases:131:+		echo "Sever not online @$IP"
-.bash_aliases:132:+	fi	
-.bash_aliases:133:+}
-.bash_aliases:134: gitshortdiff() {
-.bash_aliases:135: 	git diff | diff-lines
-.bash_aliases:136: }
+.bash_aliases:25: 		echo "Server not online @$IP"
+.bash_aliases:26: 	fi
+.bash_aliases:27: }
+.bash_aliases:28:+gitcreate(){
+.bash_aliases:29:+	PROJ=$1
+.bash_aliases:30:+	mkdir $PROJ && cd $PROJ
+.bash_aliases:31:+	git init
+.bash_aliases:32:+}
+.bash_aliases:33:+gitremoteinit(){
+.bash_aliases:34:+	PROJ=$(basename $(pwd))
+.bash_aliases:35:+	mkdir $PROJ.git && cd $PROJ.git
+.bash_aliases:36:+	git init --bare
+.bash_aliases:37:+	cd ..
+.bash_aliases:38:+	sendto git $PROJ.git
+.bash_aliases:39:+	rm -r $PROJ.git
+.bash_aliases:40:+	git remote add pi git@$(cat ~/devicelist/git):~/$PROJ.git
+.bash_aliases:41:+}
+.bash_aliases:42:+gitstart(){
+.bash_aliases:43:+	git init
+.bash_aliases:44:+	git add .
+.bash_aliases:45:+	git commit -m "first commit"
+.bash_aliases:46:+	git push pi master
+.bash_aliases:47:+}
+.bash_aliases:48: gitfixes(){
+.bash_aliases:49: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:50: 	echo "Fixing $BRANCH"
+.bash_aliases:117: 		echo ""
+.bash_aliases:118: 	fi 
+.bash_aliases:119: }
+.bash_aliases:120:-getdev(){
+.bash_aliases:120:+getfrom(){
+.bash_aliases:121: 	if [ $# -eq 0 ]; then
+.bash_aliases:122: 		echo "getdev <device> <path/to/file>"
+.bash_aliases:123: 		exit 1
+.bash_aliases:124: 	fi
+.bash_aliases:125: 	DEV=$1
+.bash_aliases:126:-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+.bash_aliases:126:-	echo "getting file from $DEV@$IP:~/$2"
+.bash_aliases:126:+	IP=$(cat ~/devicelist/$DEV)
+.bash_aliases:127:+	echo "getting $2 from $DEV@$IP:~/$2"
+.bash_aliases:128: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:129: 		scp $DEV@$IP:~/$2 .
+.bash_aliases:130: 	else
+.bash_aliases:131: 		echo "Sever not online @$IP"
+.bash_aliases:132: 	fi
+.bash_aliases:133: }
+.bash_aliases:134:-putdev(){
+.bash_aliases:134:+sendto(){
+.bash_aliases:135: 	DEV=$1
+.bash_aliases:136:-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+.bash_aliases:136:-	echo "putting $(basename $2) to $DEV@$IP:~/$2"
+.bash_aliases:136:+	IP=$(cat ~/devicelist/$DEV)
+.bash_aliases:137:+	echo "sending $2 to $DEV@$IP:~/$2"
+.bash_aliases:138: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:139:-		scp $(basename $2) $DEV@$IP:~/$2
+.bash_aliases:139:+		if [ -d $2 ]; then
+.bash_aliases:140:+			scp -r $2 $DEV@$IP:~/$2
+.bash_aliases:141:+		else
+.bash_aliases:142:+			scp $2 $DEV@$IP:~/$2
+.bash_aliases:143:+		fi
+.bash_aliases:144: 	else
+.bash_aliases:145: 		echo "Sever not online @$IP"
+.bash_aliases:146: 	fi
+.bash_aliases:147: }
+.bash_aliases:148: connect(){
+.bash_aliases:149: 	DEV=$1
+.bash_aliases:150:-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
+.bash_aliases:150:-	echo "connecting to $DEV terminal"
+.bash_aliases:150:+	IP=$(cat ~/devicelist/$DEV)
+.bash_aliases:151:+	echo "connecting to $DEV@$IP terminal"
+.bash_aliases:152: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:153: 		ssh $DEV@$IP
+.bash_aliases:154: 	else

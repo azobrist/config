@@ -25,6 +25,26 @@ clonepi(){
 		echo "Server not online @$IP"
 	fi
 }
+gitcreate(){
+	PROJ=$1
+	mkdir $PROJ && cd $PROJ
+	git init
+}
+gitremoteinit(){
+	PROJ=$(basename $(pwd))
+	mkdir $PROJ.git && cd $PROJ.git
+	git init --bare
+	cd ..
+	sendto git $PROJ.git
+	rm -r $PROJ.git
+	git remote add pi git@$(cat ~/devicelist/git):~/$PROJ.git
+}
+gitstart(){
+	git init
+	git add .
+	git commit -m "first commit"
+	git push pi master
+}
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Fixing $BRANCH"
@@ -97,34 +117,38 @@ knockknock(){
 		echo ""
 	fi 
 }
-getdev(){
+getfrom(){
 	if [ $# -eq 0 ]; then
 		echo "getdev <device> <path/to/file>"
 		exit 1
 	fi
 	DEV=$1
-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
-	echo "getting file from $DEV@$IP:~/$2"
+	IP=$(cat ~/devicelist/$DEV)
+	echo "getting $2 from $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		scp $DEV@$IP:~/$2 .
 	else
 		echo "Sever not online @$IP"
 	fi
 }
-putdev(){
+sendto(){
 	DEV=$1
-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
-	echo "putting $(basename $2) to $DEV@$IP:~/$2"
+	IP=$(cat ~/devicelist/$DEV)
+	echo "sending $2 to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $(basename $2) $DEV@$IP:~/$2
+		if [ -d $2 ]; then
+			scp -r $2 $DEV@$IP:~/$2
+		else
+			scp $2 $DEV@$IP:~/$2
+		fi
 	else
 		echo "Sever not online @$IP"
 	fi
 }
 connect(){
 	DEV=$1
-	IP=$(cat ~/config/devicelist | awk -v a="$DEV" '{for(i=1;i<=NF;i++)if($i==a)print $(i+1)}')
-	echo "connecting to $DEV terminal"
+	IP=$(cat ~/devicelist/$DEV)
+	echo "connecting to $DEV@$IP terminal"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		ssh $DEV@$IP
 	else
