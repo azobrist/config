@@ -1,13 +1,7 @@
-.bash_aliases:86: 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:87: 	fi
-.bash_aliases:88: 	echo "Updating $BRANCH"
-.bash_aliases:89:-	git fetch pi $BRANCH	
-.bash_aliases:89:+	if [ $BRANCH == "master" ];then
-.bash_aliases:90:+		echo "Fetching $BRANCH"
-.bash_aliases:91:+		git fetch pi $BRANCH
-.bash_aliases:92:+	else
-.bash_aliases:93:+		echo "Updating current branch - $BRANCH"
-.bash_aliases:94:+		git pull pi $BRANCH	
-.bash_aliases:95: }
-.bash_aliases:96: gitignore(){
-.bash_aliases:97: 	if [ -d .git ]; then
+.bash_aliases:92: 	else
+.bash_aliases:93: 		echo "Updating current branch - $BRANCH"
+.bash_aliases:94: 		git pull pi $BRANCH	
+.bash_aliases:95:+	fi
+.bash_aliases:96: }
+.bash_aliases:97: gitignore(){
+.bash_aliases:98: 	if [ -d .git ]; then

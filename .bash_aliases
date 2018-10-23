@@ -92,6 +92,7 @@ gitupdate(){
 	else
 		echo "Updating current branch - $BRANCH"
 		git pull pi $BRANCH	
+	fi
 }
 gitignore(){
 	if [ -d .git ]; then
