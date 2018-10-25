@@ -1,8 +1,41 @@
-.bash_aliases:53: 		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-.bash_aliases:54: 		FILES=$(git diff --name-only)
-.bash_aliases:55: 		git add .
-.bash_aliases:56:-		git commit -m "random fixes - $FILES"
-.bash_aliases:56:+		git commit -m "random fixes - n$FILES"
-.bash_aliases:57: 		git push pi $BRANCH
-.bash_aliases:58: 	else
-.bash_aliases:59: 		echo "Sever not online @$IP"
+.bash_aliases:5: alias fd="find . -name "
+.bash_aliases:6: alias cd..="cd .."
+.bash_aliases:7: alias brc='source ~/.bashrc'
+.bash_aliases:8:+alias gitfilehist='git log -p --'
+.bash_aliases:9:+alias gitaligntoremote='git reset --hard @{u}'
+.bash_aliases:10: cloneoffice(){
+.bash_aliases:11: 	IP="10.70.16.118"
+.bash_aliases:12: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:22: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:23: 		git clone git@$IP:~/$1.git
+.bash_aliases:24: 		cd $1
+.bash_aliases:25:+		git remote remove origin
+.bash_aliases:26: 		git remote add pi git@$IP:~/$1.git
+.bash_aliases:27: 	else
+.bash_aliases:28: 		echo "Server not online @$IP"
+.bash_aliases:111: knockknock(){
+.bash_aliases:112: 	IP="$1"
+.bash_aliases:113: 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+.bash_aliases:114:-		ping $IP -n 1 > /dev/null
+.bash_aliases:114:+		ping $IP -n 1 | grep "Reply from $IP"
+.bash_aliases:115: 	else
+.bash_aliases:116:-		ping -q -c1 $IP > /dev/null
+.bash_aliases:116:+		ping -q -c1 $IP | grep "Reply from $IP"
+.bash_aliases:117: 	fi
+.bash_aliases:118: 	if [ $? -eq 0 ] 
+.bash_aliases:119: 	then
+.bash_aliases:139: sendto(){
+.bash_aliases:140: 	DEV=$1
+.bash_aliases:141: 	IP=$(cat ~/devicelist/$DEV)
+.bash_aliases:142:-	echo "sending $2 to $DEV@$IP:~/$2"
+.bash_aliases:142:+	echo "sending $(basename $2) to $DEV@$IP:~/$2"
+.bash_aliases:143: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:144: 		if [ -d $2 ]; then
+.bash_aliases:145:-			scp -r $2 $DEV@$IP:~/$2
+.bash_aliases:145:+			scp -r $(basename $2) $DEV@$IP:~/$2
+.bash_aliases:146: 		else
+.bash_aliases:147:-			scp $2 $DEV@$IP:~/$2
+.bash_aliases:147:+			scp $(basename $2) $DEV@$IP:~/$2
+.bash_aliases:148: 		fi
+.bash_aliases:149: 	else
+.bash_aliases:150: 		echo "Sever not online @$IP"

@@ -5,6 +5,8 @@ alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias fd="find . -name "
 alias cd..="cd .."
 alias brc='source ~/.bashrc'
+alias gitfilehist='git log -p --'
+alias gitaligntoremote='git reset --hard @{u}'
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
@@ -20,6 +22,7 @@ clonepi(){
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git clone git@$IP:~/$1.git
 		cd $1
+		git remote remove origin
 		git remote add pi git@$IP:~/$1.git
 	else
 		echo "Server not online @$IP"
@@ -108,9 +111,9 @@ shellme(){
 knockknock(){
 	IP="$1"
 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 > /dev/null
+		ping $IP -n 1 | grep "Reply from $IP"
 	else
-		ping -q -c1 $IP > /dev/null
+		ping -q -c1 $IP | grep "Reply from $IP"
 	fi
 	if [ $? -eq 0 ] 
 	then
@@ -136,12 +139,12 @@ getfrom(){
 sendto(){
 	DEV=$1
 	IP=$(cat ~/devicelist/$DEV)
-	echo "sending $2 to $DEV@$IP:~/$2"
+	echo "sending $(basename $2) to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $2 ]; then
-			scp -r $2 $DEV@$IP:~/$2
+			scp -r $(basename $2) $DEV@$IP:~/$2
 		else
-			scp $2 $DEV@$IP:~/$2
+			scp $(basename $2) $DEV@$IP:~/$2
 		fi
 	else
 		echo "Sever not online @$IP"
