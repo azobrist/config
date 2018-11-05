@@ -111,12 +111,11 @@ shellme(){
 knockknock(){
 	IP="$1"
 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 | grep "Reply from $IP"
+		ping $IP -n 1 | grep "Reply from $IP" > /dev/null
 	else
-		ping -q -c1 $IP | grep "Reply from $IP"
+		ping -q -c1 $IP | grep "Reply from $IP" > /dev/null
 	fi
-	if [ $? -eq 0 ] 
-	then
+	if [ $? -eq 0 ]; then
 		echo "who's there??"
 	else
 		echo ""

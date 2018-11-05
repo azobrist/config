@@ -1,41 +1,24 @@
-.bash_aliases:5: alias fd="find . -name "
-.bash_aliases:6: alias cd..="cd .."
-.bash_aliases:7: alias brc='source ~/.bashrc'
-.bash_aliases:8:+alias gitfilehist='git log -p --'
-.bash_aliases:9:+alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10: cloneoffice(){
-.bash_aliases:11: 	IP="10.70.16.118"
-.bash_aliases:12: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:22: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:23: 		git clone git@$IP:~/$1.git
-.bash_aliases:24: 		cd $1
-.bash_aliases:25:+		git remote remove origin
-.bash_aliases:26: 		git remote add pi git@$IP:~/$1.git
-.bash_aliases:27: 	else
-.bash_aliases:28: 		echo "Server not online @$IP"
 .bash_aliases:111: knockknock(){
 .bash_aliases:112: 	IP="$1"
 .bash_aliases:113: 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-.bash_aliases:114:-		ping $IP -n 1 > /dev/null
-.bash_aliases:114:+		ping $IP -n 1 | grep "Reply from $IP"
+.bash_aliases:114:-		ping $IP -n 1 | grep "Reply from $IP"
+.bash_aliases:114:+		ping $IP -n 1 | grep "Reply from $IP" > /dev/null
 .bash_aliases:115: 	else
-.bash_aliases:116:-		ping -q -c1 $IP > /dev/null
-.bash_aliases:116:+		ping -q -c1 $IP | grep "Reply from $IP"
+.bash_aliases:116:-		ping -q -c1 $IP | grep "Reply from $IP"
+.bash_aliases:116:+		ping -q -c1 $IP | grep "Reply from $IP" > /dev/null
 .bash_aliases:117: 	fi
-.bash_aliases:118: 	if [ $? -eq 0 ] 
-.bash_aliases:119: 	then
-.bash_aliases:139: sendto(){
-.bash_aliases:140: 	DEV=$1
-.bash_aliases:141: 	IP=$(cat ~/devicelist/$DEV)
-.bash_aliases:142:-	echo "sending $2 to $DEV@$IP:~/$2"
-.bash_aliases:142:+	echo "sending $(basename $2) to $DEV@$IP:~/$2"
-.bash_aliases:143: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:144: 		if [ -d $2 ]; then
-.bash_aliases:145:-			scp -r $2 $DEV@$IP:~/$2
-.bash_aliases:145:+			scp -r $(basename $2) $DEV@$IP:~/$2
-.bash_aliases:146: 		else
-.bash_aliases:147:-			scp $2 $DEV@$IP:~/$2
-.bash_aliases:147:+			scp $(basename $2) $DEV@$IP:~/$2
-.bash_aliases:148: 		fi
-.bash_aliases:149: 	else
-.bash_aliases:150: 		echo "Sever not online @$IP"
+.bash_aliases:118:-	if [ $? -eq 0 ] 
+.bash_aliases:118:-	then
+.bash_aliases:118:+	if [ $? -eq 0 ]; then
+.bash_aliases:119: 		echo "who's there??"
+.bash_aliases:120: 	else
+.bash_aliases:121: 		echo ""
+.gitconfig:7: 	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+.gitconfig:8: 	type = cat-file -t
+.gitconfig:9: 	dump = cat-file -p
+.gitconfig:10:+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+.gitconfig:11:+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+.gitconfig:12:+	lg = !"git lg1"
+.gitconfig:13: [user]
+.gitconfig:14: 	email = adam.zobrist@oncorems.com
+.gitconfig:15: 	name = AdamZ
