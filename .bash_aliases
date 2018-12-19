@@ -31,12 +31,7 @@ clonepi(){
 		echo "Server not online @$IP"
 	fi
 }
-gitcreate(){
-	PROJ=$1
-	mkdir $PROJ && cd $PROJ
-	git init
-}
-gitorigin(){
+gitcreateremote(){
 	PROJ=$(basename $(pwd))
 	mkdir $PROJ.git && cd $PROJ.git
 	git init --bare
@@ -44,12 +39,6 @@ gitorigin(){
 	sendto git $PROJ.git
 	rm -r $PROJ.git
 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
-}
-gitstart(){
-	git init
-	git add .
-	git commit -m "first commit"
-	git push pi master
 }
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
@@ -114,11 +103,11 @@ shellme(){
 knockknock(){
 	IP="$1"
 	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 | grep "Reply from $IP" > /dev/null
+		ping $IP -n 1 | grep "Destination Host Unreachable" > /dev/null
 	else
-		ping -q -c1 $IP | grep "Reply from $IP" > /dev/null
+		ping -q -c1 $IP | grep "Destination Host Unreachable" > /dev/null
 	fi
-	if [ $? -eq 0 ]; then
+	if [ $? -ne 0 ]; then
 		echo "who's there??"
 	else
 		echo ""
@@ -165,7 +154,8 @@ connect(){
 addnetdev(){
 	DEV=$1
 	IP=$2
-	if [ ! -d "~/netdevlist" ]; then
+	if [ ! -d ~/netdevlist ]; then
+		echo "creating netdevlist dir"
 		mkdir ~/netdevlist
 	fi
 	echo "$IP" > ~/netdevlist/$DEV
