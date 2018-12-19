@@ -7,6 +7,9 @@ alias cd..="cd .."
 alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
+qfind(){
+	find . -name *$1*
+}
 cloneoffice(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
@@ -40,7 +43,7 @@ gitorigin(){
 	cd ..
 	sendto git $PROJ.git
 	rm -r $PROJ.git
-	git remote add pi git@$(cat ~/devicelist/git):~/$PROJ.git
+	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
 }
 gitstart(){
 	git init
@@ -127,7 +130,7 @@ getfrom(){
 		exit 1
 	fi
 	DEV=$1
-	IP=$(cat ~/devicelist/$DEV)
+	IP=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		scp $DEV@$IP:~/$2 .
@@ -137,7 +140,7 @@ getfrom(){
 }
 sendto(){
 	DEV=$1
-	IP=$(cat ~/devicelist/$DEV)
+	IP=$(cat ~/netdevlist/$DEV)
 	echo "sending $(basename $2) to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $2 ]; then
@@ -151,7 +154,7 @@ sendto(){
 }
 connect(){
 	DEV=$1
-	IP=$(cat ~/devicelist/$DEV)
+	IP=$(cat ~/netdevlist/$DEV)
 	echo "connecting to $DEV@$IP terminal"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		ssh $DEV@$IP
@@ -159,6 +162,14 @@ connect(){
 		echo "Sever not online @$IP"
 	fi	
 }
+addnetdev(){
+	DEV=$1
+	IP=$2
+	if [ ! -d "~/netdevlist" ]; then
+		mkdir ~/netdevlist
+	fi
+	echo "$IP" > ~/netdevlist/$DEV
+}	
 gitshortdiff() {
 	git diff | diff-lines
 }
