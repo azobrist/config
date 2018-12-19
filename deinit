@@ -1,26 +1,33 @@
 #!/bin/bash
-INIT=configured
+INIT=initialized
 if [ ! -f "$INIT" ]
 then
 	exit 1
 fi
 
+#continue
 cd old
 FILE=.bash_aliases
-rm ~/$FILE
 if [ -f "$FILE" ]
 then
-	cp $FILE ~
-	rm $FILE
+	rm ~/$FILE
+	mv $FILE ~/$FILE
 fi
 
 FILE=.gitconfig
-rm ~/$FILE
 if [ -f "$FILE" ]
 then
-	cp $FILE ~
-	rm $FILE
+	rm ~/$FILE
+	mv $FILE ~/$FILE
 fi
+
+FILE=.vimrc
+if [ -f "$FILE" ]
+then
+	rm ~/$FILE
+	mv $FILE ~/$FILE
+fi
+
 cd ..
 rm -r old
 rm $INIT

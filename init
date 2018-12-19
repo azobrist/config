@@ -1,5 +1,5 @@
 #!/bin/bash
-INIT=configured
+INIT=initialized
 if [ -f "$INIT" ]
 then
 	echo "re-initing and exiting"
@@ -7,6 +7,7 @@ then
 	exit 1
 fi
 
+#continue
 mkdir old
 cd ~
 FILE=.bash_aliases
@@ -23,6 +24,14 @@ then
 fi
 ln -s config/$FILE .
 
-touch config/$INIT
+FILE=.vimrc
+if [ -f "$FILE" ]
+then
+	mv $FILE config/old/$FILE
+fi
+ln -s config/$FILE .
+cd config
+
+touch $INIT
 exec bash
 
