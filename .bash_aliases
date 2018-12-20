@@ -38,7 +38,9 @@ gitcreateremote(){
 	cd ..
 	sendto git $PROJ.git
 	rm -r $PROJ.git
+	git init
 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
+	gitfixes
 }
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
@@ -53,19 +55,6 @@ gitfixes(){
 	else
 		echo "Sever not online @$IP"
 	fi
-}
-gittest(){
-	if [ $# -eq 1 ]; then
-		BRANCH=$1
-	else
-		BRANCH="feature_test"
-	fi
-	echo "Testing $BRANCH"
-	git branch $BRANCH
-	git co $BRANCH
-	git add .
-	git commit -m "first commit of feature branch - $BRANCH"
-	git push pi $BRANCH
 }
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
@@ -119,10 +108,12 @@ getfrom(){
 		exit 1
 	fi
 	DEV=$1
+	DIR=$(cat ~/netdevlist/common | grep $2)
+	echo "$DIR"
 	IP=$(cat ~/netdevlist/$DEV)
-	echo "getting $2 from $DEV@$IP:~/$2"
+	echo "getting $2 from $DEV@$IP:~/$DIR"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $DEV@$IP:~/$2 .
+		scp $DEV@$IP:~/$DIR .
 	else
 		echo "Sever not online @$IP"
 	fi
@@ -130,12 +121,14 @@ getfrom(){
 sendto(){
 	DEV=$1
 	IP=$(cat ~/netdevlist/$DEV)
-	echo "sending $(basename $2) to $DEV@$IP:~/$2"
+	FILE=$3
+	DIR=$(cat ~/netdevlist/common | grep "$2")
+	echo "sending to $DEV@$IP:~/$DIR"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		if [ -d $2 ]; then
-			scp -r $(basename $2) $DEV@$IP:~/$2
+		if [ -d $FILE ]; then
+			scp -r $FILE  $DEV@$IP:~/$2
 		else
-			scp $(basename $2) $DEV@$IP:~/$2
+			scp $FILE $DEV@$IP:~/$2
 		fi
 	else
 		echo "Sever not online @$IP"
@@ -159,7 +152,11 @@ addnetdev(){
 		mkdir ~/netdevlist
 	fi
 	echo "$IP" > ~/netdevlist/$DEV
-}	
+}
+addnetdir(){
+	DIR=$1
+	echo "$DIR" >> ~/netdevlist/common
+}
 gitshortdiff() {
 	git diff | diff-lines
 }

@@ -1,0 +1,72 @@
+.bash_aliases:38: 	cd ..
+.bash_aliases:39: 	sendto git $PROJ.git
+.bash_aliases:40: 	rm -r $PROJ.git
+.bash_aliases:41:+	git init
+.bash_aliases:42: 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
+.bash_aliases:43:+	gitfixes
+.bash_aliases:44: }
+.bash_aliases:45: gitfixes(){
+.bash_aliases:46: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:56: 		echo "Sever not online @$IP"
+.bash_aliases:57: 	fi
+.bash_aliases:58: }
+.bash_aliases:59:-gittest(){
+.bash_aliases:59:-	if [ $# -eq 1 ]; then
+.bash_aliases:59:-		BRANCH=$1
+.bash_aliases:59:-	else
+.bash_aliases:59:-		BRANCH="feature_test"
+.bash_aliases:59:-	fi
+.bash_aliases:59:-	echo "Testing $BRANCH"
+.bash_aliases:59:-	git branch $BRANCH
+.bash_aliases:59:-	git co $BRANCH
+.bash_aliases:59:-	git add .
+.bash_aliases:59:-	git commit -m "first commit of feature branch - $BRANCH"
+.bash_aliases:59:-	git push pi $BRANCH
+.bash_aliases:59:-}
+.bash_aliases:59: gitfinish(){
+.bash_aliases:60: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:61: 	echo "Finishing $BRANCH"
+.bash_aliases:108: 		exit 1
+.bash_aliases:109: 	fi
+.bash_aliases:110: 	DEV=$1
+.bash_aliases:111:+	DIR=$(cat ~/netdevlist/common | grep $2)
+.bash_aliases:112:+	echo "$DIR"
+.bash_aliases:113: 	IP=$(cat ~/netdevlist/$DEV)
+.bash_aliases:114:-	echo "getting $2 from $DEV@$IP:~/$2"
+.bash_aliases:114:+	echo "getting $2 from $DEV@$IP:~/$DIR"
+.bash_aliases:115: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:116:-		scp $DEV@$IP:~/$2 .
+.bash_aliases:116:+		scp $DEV@$IP:~/$DIR .
+.bash_aliases:117: 	else
+.bash_aliases:118: 		echo "Sever not online @$IP"
+.bash_aliases:119: 	fi
+.bash_aliases:121: sendto(){
+.bash_aliases:122: 	DEV=$1
+.bash_aliases:123: 	IP=$(cat ~/netdevlist/$DEV)
+.bash_aliases:124:-	echo "sending $(basename $2) to $DEV@$IP:~/$2"
+.bash_aliases:124:+	FILE=$3
+.bash_aliases:125:+	DIR=$(cat ~/netdevlist/common | grep "$2")
+.bash_aliases:126:+	echo "sending to $DEV@$IP:~/$DIR"
+.bash_aliases:127: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:128:-		if [ -d $2 ]; then
+.bash_aliases:128:-			scp -r $(basename $2) $DEV@$IP:~/$2
+.bash_aliases:128:+		if [ -d $FILE ]; then
+.bash_aliases:129:+			scp -r $FILE  $DEV@$IP:~/$2
+.bash_aliases:130: 		else
+.bash_aliases:131:-			scp $(basename $2) $DEV@$IP:~/$2
+.bash_aliases:131:+			scp $FILE $DEV@$IP:~/$2
+.bash_aliases:132: 		fi
+.bash_aliases:133: 	else
+.bash_aliases:134: 		echo "Sever not online @$IP"
+.bash_aliases:152: 		mkdir ~/netdevlist
+.bash_aliases:153: 	fi
+.bash_aliases:154: 	echo "$IP" > ~/netdevlist/$DEV
+.bash_aliases:155:-}	
+.bash_aliases:155:+}
+.bash_aliases:156:+addnetdir(){
+.bash_aliases:157:+	DIR=$1
+.bash_aliases:158:+	echo "$DIR" >> ~/netdevlist/common
+.bash_aliases:159:+}
+.bash_aliases:160: gitshortdiff() {
+.bash_aliases:161: 	git diff | diff-lines
+.bash_aliases:162: }
