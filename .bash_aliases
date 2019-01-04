@@ -108,8 +108,7 @@ getfrom(){
 		exit 1
 	fi
 	DEV=$1
-	DIR=$(cat ~/netdevlist/common | grep $2)
-	echo "$DIR"
+	DIR=$2
 	IP=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $DEV@$IP:~/$DIR"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
