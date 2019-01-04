@@ -1,9 +1,23 @@
-.bash_aliases:108: 		exit 1
 .bash_aliases:109: 	fi
 .bash_aliases:110: 	DEV=$1
-.bash_aliases:111:-	DIR=$(cat ~/netdevlist/common | grep $2)
-.bash_aliases:111:-	echo "$DIR"
-.bash_aliases:111:+	DIR=$2
-.bash_aliases:112: 	IP=$(cat ~/netdevlist/$DEV)
-.bash_aliases:113: 	echo "getting $2 from $DEV@$IP:~/$DIR"
-.bash_aliases:114: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:111: 	DIR=$2
+.bash_aliases:112:+	OPT=$3
+.bash_aliases:113: 	IP=$(cat ~/netdevlist/$DEV)
+.bash_aliases:114: 	echo "getting $2 from $DEV@$IP:~/$DIR"
+.bash_aliases:115: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:116:-		scp $DEV@$IP:~/$DIR .
+.bash_aliases:116:+		scp $DEV@$IP:~/$DIR . $OPT
+.bash_aliases:117: 	else
+.bash_aliases:118: 		echo "Sever not online @$IP"
+.bash_aliases:119: 	fi
+.bash_aliases:121: sendto(){
+.bash_aliases:122: 	DEV=$1
+.bash_aliases:123: 	IP=$(cat ~/netdevlist/$DEV)
+.bash_aliases:124:-	FILE=$3
+.bash_aliases:124:-	DIR=$(cat ~/netdevlist/common | grep "$2")
+.bash_aliases:124:-	echo "sending to $DEV@$IP:~/$DIR"
+.bash_aliases:124:+	FILE=${$2##*/}
+.bash_aliases:125:+	echo "sending $FILE to $DEV@$IP:~/$2"
+.bash_aliases:126: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:127: 		if [ -d $FILE ]; then
+.bash_aliases:128: 			scp -r $FILE  $DEV@$IP:~/$2

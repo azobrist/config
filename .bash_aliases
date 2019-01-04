@@ -109,10 +109,11 @@ getfrom(){
 	fi
 	DEV=$1
 	DIR=$2
+	OPT=$3
 	IP=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $DEV@$IP:~/$DIR"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $DEV@$IP:~/$DIR .
+		scp $DEV@$IP:~/$DIR . $OPT
 	else
 		echo "Sever not online @$IP"
 	fi
@@ -120,9 +121,8 @@ getfrom(){
 sendto(){
 	DEV=$1
 	IP=$(cat ~/netdevlist/$DEV)
-	FILE=$3
-	DIR=$(cat ~/netdevlist/common | grep "$2")
-	echo "sending to $DEV@$IP:~/$DIR"
+	FILE=${$2##*/}
+	echo "sending $FILE to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $FILE ]; then
 			scp -r $FILE  $DEV@$IP:~/$2
