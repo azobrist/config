@@ -113,7 +113,7 @@ getfrom(){
 	IP=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $DEV@$IP:~/$DIR"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $DEV@$IP:~/$DIR . $OPT
+		scp $OPT $DEV@$IP:~/$DIR .
 	else
 		echo "Sever not online @$IP"
 	fi
