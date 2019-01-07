@@ -1,8 +1,11 @@
-.bash_aliases:121: sendto(){
-.bash_aliases:122: 	DEV=$1
-.bash_aliases:123: 	IP=$(cat ~/netdevlist/$DEV)
-.bash_aliases:124:-	FILE=${$2##*/}
-.bash_aliases:124:+	FILE=${2##*/}
-.bash_aliases:125: 	echo "sending $FILE to $DEV@$IP:~/$2"
-.bash_aliases:126: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:127: 		if [ -d $FILE ]; then
+.bash_aliases:32: 	fi
+.bash_aliases:33: }
+.bash_aliases:34: gitcreateremote(){
+.bash_aliases:35:+	set -e
+.bash_aliases:36: 	PROJ=$(basename $(pwd))
+.bash_aliases:37:+	if [ -d $PROJ.git ]; then
+.bash_aliases:38:+		rm -r $PROJ.git
+.bash_aliases:39:+	fi
+.bash_aliases:40: 	mkdir $PROJ.git && cd $PROJ.git
+.bash_aliases:41: 	git init --bare
+.bash_aliases:42: 	cd ..

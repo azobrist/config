@@ -32,7 +32,11 @@ clonepi(){
 	fi
 }
 gitcreateremote(){
+	set -e
 	PROJ=$(basename $(pwd))
+	if [ -d $PROJ.git ]; then
+		rm -r $PROJ.git
+	fi
 	mkdir $PROJ.git && cd $PROJ.git
 	git init --bare
 	cd ..
