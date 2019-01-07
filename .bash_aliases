@@ -121,7 +121,7 @@ getfrom(){
 sendto(){
 	DEV=$1
 	IP=$(cat ~/netdevlist/$DEV)
-	FILE=${$2##*/}
+	FILE=${2##*/}
 	echo "sending $FILE to $DEV@$IP:~/$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $FILE ]; then
