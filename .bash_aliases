@@ -48,7 +48,7 @@ gitfixes(){
 	git commit -m "quick fix - \n$FILES"
 	git push origin $BRANCH
 }
-gitfinish(){
+gitcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Finishing $BRANCH"
 	git add .
@@ -59,20 +59,20 @@ gitupdate(){
 	if [ $# -eq 1 ]; then
 		BRANCH=$1
 		echo "Fetching $BRANCH"
-		git fetch pi $BRANCH
+		git fetch origin $BRANCH
 	else
 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 		echo "Updating $BRANCH"
-		git pull pi $BRANCH
+		git pull origin $BRANCH
 	fi
 }
 gitignore(){
 	if [ -d .git ]; then
-		if [ ! -f ./.gitignore ]; then
-			touch ./.gitignore
+		if [ ! -f .gitignore ]; then
+			touch .gitignore
 		fi
 		echo "Adding $1 to .gitignore"
-		echo $1 >> ./.gitignore
+		echo $1 >> .gitignore
 	else
 		echo "Not a git repo"
 	fi
@@ -80,7 +80,7 @@ gitignore(){
 shellme(){
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
-	#history | tail -$1 | cut -c 8- >> $2.sh
+	vim $1.sh
 }
 knockknock(){
 	IP="$1"
