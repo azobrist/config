@@ -20,16 +20,9 @@ cloneoffice(){
 		echo "Server not online @$IP"
 	fi
 }
-clonepi(){
-	IP="10.70.56.40"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		git clone git@$IP:~/$1.git
-		cd $1
-		git remote remove origin
-		git remote add pi git@$IP:~/$1.git
-	else
-		echo "Server not online @$IP"
-	fi
+clonegithub(){
+	git clone git@github.com:azobrist/$1.git
+	cd $1
 }
 gitcreateremote(){
 	set -e
