@@ -1,0 +1,21 @@
+.bash_aliases:42: gitfixes(){
+.bash_aliases:43: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:44: 	echo "Fixing $BRANCH"
+.bash_aliases:45:-	IP="10.70.56.40"
+.bash_aliases:45:-	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:45:-		gitshortdiff | sed /^gitfixes/d > gitfixes.log
+.bash_aliases:45:-		FILES=$(git diff --name-only)
+.bash_aliases:45:-		git add .
+.bash_aliases:45:-		git commit -m "random fixes - n$FILES"
+.bash_aliases:45:-		git push pi $BRANCH
+.bash_aliases:45:-	else
+.bash_aliases:45:-		echo "Sever not online @$IP"
+.bash_aliases:45:-	fi
+.bash_aliases:45:+	gitshortdiff | sed /^gitfixes/d > .gitfixes
+.bash_aliases:46:+	FILES=$(git diff --name-only)
+.bash_aliases:47:+	git add .
+.bash_aliases:48:+	git commit -m "quick fix - n$FILES"
+.bash_aliases:49:+	git push origin $BRANCH
+.bash_aliases:50: }
+.bash_aliases:51: gitfinish(){
+.bash_aliases:52: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')

@@ -42,16 +42,11 @@ gitcreateremote(){
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Fixing $BRANCH"
-	IP="10.70.56.40"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-		FILES=$(git diff --name-only)
-		git add .
-		git commit -m "random fixes - \n$FILES"
-		git push pi $BRANCH
-	else
-		echo "Sever not online @$IP"
-	fi
+	gitshortdiff | sed /^gitfixes/d > .gitfixes
+	FILES=$(git diff --name-only)
+	git add .
+	git commit -m "quick fix - \n$FILES"
+	git push origin $BRANCH
 }
 gitfinish(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
