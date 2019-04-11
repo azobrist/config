@@ -90,8 +90,9 @@ gitignore(){
 	fi
 }
 shellme(){
-	echo "#!/bin/bash" > $2.sh
-	history | tail -$1 | cut -c 8- >> $2.sh
+	echo "#!/bin/bash" > $1.sh
+	chmod +x $1.sh
+	#history | tail -$1 | cut -c 8- >> $2.sh
 }
 knockknock(){
 	IP="$1"
