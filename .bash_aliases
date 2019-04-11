@@ -42,7 +42,7 @@ gitcreateremote(){
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Fixing $BRANCH"
-	gitshortdiff | sed /^gitfixes/d > .gitfixes
+	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only)
 	git add .
 	git commit -m "quick fix - \n$FILES"

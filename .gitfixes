@@ -1,62 +1,70 @@
+.bash_aliases:42: gitfixes(){
+.bash_aliases:43: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:44: 	echo "Fixing $BRANCH"
+.bash_aliases:45:-	gitshortdiff | sed /^gitfixes/d > .gitfixes
+.bash_aliases:45:+	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+.bash_aliases:46: 	FILES=$(git diff --name-only)
+.bash_aliases:47: 	git add .
 .bash_aliases:48: 	git commit -m "quick fix - n$FILES"
-.bash_aliases:49: 	git push origin $BRANCH
-.bash_aliases:50: }
-.bash_aliases:51:-gitfinish(){
-.bash_aliases:51:+gitcommit(){
-.bash_aliases:52: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:53: 	echo "Finishing $BRANCH"
-.bash_aliases:54: 	git add .
-.bash_aliases:59: 	if [ $# -eq 1 ]; then
-.bash_aliases:60: 		BRANCH=$1
-.bash_aliases:61: 		echo "Fetching $BRANCH"
-.bash_aliases:62:-		git fetch pi $BRANCH
-.bash_aliases:62:+		git fetch origin $BRANCH
-.bash_aliases:63: 	else
-.bash_aliases:64: 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:65: 		echo "Updating $BRANCH"
-.bash_aliases:66:-		git pull pi $BRANCH
-.bash_aliases:66:+		git pull origin $BRANCH
-.bash_aliases:67: 	fi
-.bash_aliases:68: }
-.bash_aliases:69: gitignore(){
-.bash_aliases:70: 	if [ -d .git ]; then
-.bash_aliases:71:-		if [ ! -f ./.gitignore ]; then
-.bash_aliases:71:-			touch ./.gitignore
-.bash_aliases:71:+		if [ ! -f .gitignore ]; then
-.bash_aliases:72:+			touch .gitignore
-.bash_aliases:73: 		fi
-.bash_aliases:74: 		echo "Adding $1 to .gitignore"
-.bash_aliases:75:-		echo $1 >> ./.gitignore
-.bash_aliases:75:+		echo $1 >> .gitignore
-.bash_aliases:76: 	else
-.bash_aliases:77: 		echo "Not a git repo"
-.bash_aliases:78: 	fi
-.bash_aliases:80: shellme(){
-.bash_aliases:81: 	echo "#!/bin/bash" > $1.sh
-.bash_aliases:82: 	chmod +x $1.sh
-.bash_aliases:83:-	#history | tail -$1 | cut -c 8- >> $2.sh
-.bash_aliases:83:+	vim $1.sh
-.bash_aliases:84: }
-.bash_aliases:85: knockknock(){
-.bash_aliases:86: 	IP="$1"
-.gitfixes:0:-.bash_aliases:42: gitfixes(){
-.gitfixes:0:-.bash_aliases:43: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.gitfixes:0:-.bash_aliases:44: 	echo "Fixing $BRANCH"
-.gitfixes:0:-.bash_aliases:45:-	IP="10.70.56.40"
-.gitfixes:0:-.bash_aliases:45:-	if [ "$(knockknock $IP)" == "who's there??" ];then
-.gitfixes:0:-.bash_aliases:45:-		gitshortdiff | sed /^gitfixes/d > gitfixes.log
-.gitfixes:0:-.bash_aliases:45:-		FILES=$(git diff --name-only)
-.gitfixes:0:-.bash_aliases:45:-		git add .
-.gitfixes:0:-.bash_aliases:45:-		git commit -m "random fixes - n$FILES"
-.gitfixes:0:-.bash_aliases:45:-		git push pi $BRANCH
-.gitfixes:0:-.bash_aliases:45:-	else
-.gitfixes:0:-.bash_aliases:45:-		echo "Sever not online @$IP"
-.gitfixes:0:-.bash_aliases:45:-	fi
-.gitfixes:0:-.bash_aliases:45:+	gitshortdiff | sed /^gitfixes/d > .gitfixes
-.gitfixes:0:-.bash_aliases:46:+	FILES=$(git diff --name-only)
-.gitfixes:0:-.bash_aliases:47:+	git add .
-.gitfixes:0:-.bash_aliases:48:+	git commit -m "quick fix - n$FILES"
-.gitfixes:0:-.bash_aliases:49:+	git push origin $BRANCH
+.gitfixes:0:-.bash_aliases:48: 	git commit -m "quick fix - n$FILES"
+.gitfixes:0:-.bash_aliases:49: 	git push origin $BRANCH
 .gitfixes:0:-.bash_aliases:50: }
-.gitfixes:0:-.bash_aliases:51: gitfinish(){
+.gitfixes:0:-.bash_aliases:51:-gitfinish(){
+.gitfixes:0:-.bash_aliases:51:+gitcommit(){
 .gitfixes:0:-.bash_aliases:52: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.gitfixes:0:-.bash_aliases:53: 	echo "Finishing $BRANCH"
+.gitfixes:0:-.bash_aliases:54: 	git add .
+.gitfixes:0:-.bash_aliases:59: 	if [ $# -eq 1 ]; then
+.gitfixes:0:-.bash_aliases:60: 		BRANCH=$1
+.gitfixes:0:-.bash_aliases:61: 		echo "Fetching $BRANCH"
+.gitfixes:0:-.bash_aliases:62:-		git fetch pi $BRANCH
+.gitfixes:0:-.bash_aliases:62:+		git fetch origin $BRANCH
+.gitfixes:0:-.bash_aliases:63: 	else
+.gitfixes:0:-.bash_aliases:64: 		BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.gitfixes:0:-.bash_aliases:65: 		echo "Updating $BRANCH"
+.gitfixes:0:-.bash_aliases:66:-		git pull pi $BRANCH
+.gitfixes:0:-.bash_aliases:66:+		git pull origin $BRANCH
+.gitfixes:0:-.bash_aliases:67: 	fi
+.gitfixes:0:-.bash_aliases:68: }
+.gitfixes:0:-.bash_aliases:69: gitignore(){
+.gitfixes:0:-.bash_aliases:70: 	if [ -d .git ]; then
+.gitfixes:0:-.bash_aliases:71:-		if [ ! -f ./.gitignore ]; then
+.gitfixes:0:-.bash_aliases:71:-			touch ./.gitignore
+.gitfixes:0:-.bash_aliases:71:+		if [ ! -f .gitignore ]; then
+.gitfixes:0:-.bash_aliases:72:+			touch .gitignore
+.gitfixes:0:-.bash_aliases:73: 		fi
+.gitfixes:0:-.bash_aliases:74: 		echo "Adding $1 to .gitignore"
+.gitfixes:0:-.bash_aliases:75:-		echo $1 >> ./.gitignore
+.gitfixes:0:-.bash_aliases:75:+		echo $1 >> .gitignore
+.gitfixes:0:-.bash_aliases:76: 	else
+.gitfixes:0:-.bash_aliases:77: 		echo "Not a git repo"
+.gitfixes:0:-.bash_aliases:78: 	fi
+.gitfixes:0:-.bash_aliases:80: shellme(){
+.gitfixes:0:-.bash_aliases:81: 	echo "#!/bin/bash" > $1.sh
+.gitfixes:0:-.bash_aliases:82: 	chmod +x $1.sh
+.gitfixes:0:-.bash_aliases:83:-	#history | tail -$1 | cut -c 8- >> $2.sh
+.gitfixes:0:-.bash_aliases:83:+	vim $1.sh
+.gitfixes:0:-.bash_aliases:84: }
+.gitfixes:0:-.bash_aliases:85: knockknock(){
+.gitfixes:0:-.bash_aliases:86: 	IP="$1"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:42: gitfixes(){
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:43: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:44: 	echo "Fixing $BRANCH"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-	IP="10.70.56.40"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-	if [ "$(knockknock $IP)" == "who's there??" ];then
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		gitshortdiff | sed /^gitfixes/d > gitfixes.log
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		FILES=$(git diff --name-only)
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		git add .
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		git commit -m "random fixes - n$FILES"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		git push pi $BRANCH
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-	else
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-		echo "Sever not online @$IP"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:-	fi
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:45:+	gitshortdiff | sed /^gitfixes/d > .gitfixes
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:46:+	FILES=$(git diff --name-only)
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:47:+	git add .
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:48:+	git commit -m "quick fix - n$FILES"
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:49:+	git push origin $BRANCH
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:50: }
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:51: gitfinish(){
+.gitfixes:0:-.gitfixes:0:-.bash_aliases:52: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
