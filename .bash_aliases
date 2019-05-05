@@ -81,7 +81,17 @@ gitignore(){
 shellme(){
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
-	vim $1.sh
+	if [ $# -gt 1 ]; then
+		isnum $2
+		if [ $? -eq 0 ]; then
+			echo "history pulled"
+			history $2 | cut -c 8- >> $1.sh
+		else
+			echo "need to enter number $2"
+		fi	
+	else
+		vim $1.sh
+	fi
 }
 knockknock(){
 	IP="$1"
@@ -171,4 +181,7 @@ diff-lines() {
             fi
         fi
     done
+}
+isnum(){
+	echo $1 | grep "^[ [:digit:] ]*$"
 }
