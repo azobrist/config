@@ -98,7 +98,7 @@ knockknock(){
 }
 getfrom(){
 	if [ $# -eq 0 ]; then
-		echo "getdev <device> <path/to/file>"
+		echo "getfrom <device> <path/to/file>"
 		exit 1
 	fi
 	DEV=$1
