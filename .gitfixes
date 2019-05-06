@@ -1,7 +1,0 @@
-.bash_aliases:7: alias brc='source ~/.bashrc'
-.bash_aliases:8: alias gitfilehist='git log -p --'
-.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10:+alias cleandockerimgs='docker rm $(docker ps -a -q -f status=exited)'
-.bash_aliases:11: qfind(){
-.bash_aliases:12: 	find . -name *$1*
-.bash_aliases:13: }
