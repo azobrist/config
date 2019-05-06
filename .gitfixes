@@ -1,24 +1,7 @@
-.bash_aliases:81: shellme(){
-.bash_aliases:82: 	echo "#!/bin/bash" > $1.sh
-.bash_aliases:83: 	chmod +x $1.sh
-.bash_aliases:84:-	vim $1.sh
-.bash_aliases:84:+	if [ $# -gt 1 ]; then
-.bash_aliases:85:+		isnum $2
-.bash_aliases:86:+		if [ $? -eq 0 ]; then
-.bash_aliases:87:+			echo "history pulled"
-.bash_aliases:88:+			history $2 | cut -c 8- >> $1.sh
-.bash_aliases:89:+		else
-.bash_aliases:90:+			echo "need to enter number $2"
-.bash_aliases:91:+		fi	
-.bash_aliases:92:+	else
-.bash_aliases:93:+		vim $1.sh
-.bash_aliases:94:+	fi
-.bash_aliases:95: }
-.bash_aliases:96: knockknock(){
-.bash_aliases:97: 	IP="$1"
-.bash_aliases:182:         fi
-.bash_aliases:183:     done
-.bash_aliases:184: }
-.bash_aliases:185:+isnum(){
-.bash_aliases:186:+	echo $1 | grep "^[ [:digit:] ]*$"
-.bash_aliases:187:+}
+.bash_aliases:7: alias brc='source ~/.bashrc'
+.bash_aliases:8: alias gitfilehist='git log -p --'
+.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
+.bash_aliases:10:+alias cleandockerimgs='docker rm $(docker ps -a -q -f status=exited)'
+.bash_aliases:11: qfind(){
+.bash_aliases:12: 	find . -name *$1*
+.bash_aliases:13: }

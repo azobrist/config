@@ -7,6 +7,7 @@ alias cd..="cd .."
 alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
+alias cleandockerimgs='docker rm $(docker ps -a -q -f status=exited)'
 qfind(){
 	find . -name *$1*
 }
