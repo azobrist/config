@@ -1,11 +1,10 @@
-.bash_aliases:7: alias brc='source ~/.bashrc'
-.bash_aliases:8: alias gitfilehist='git log -p --'
-.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10:-alias cleandockerimgs='docker rm $(docker ps -a -q -f status=exited)'
-.bash_aliases:10:+cleandockerimgs(){
-.bash_aliases:11:+	read -p "This will wipe all containers off this machine!! Enter to continue..."
-.bash_aliases:12:+	docker rm $(docker ps -a -q -f status=exited)
-.bash_aliases:13:+}
-.bash_aliases:14: qfind(){
-.bash_aliases:15: 	find . -name *$1*
-.bash_aliases:16: }
+.bash_aliases:26: }
+.bash_aliases:27: clonegithub(){
+.bash_aliases:28: 	git clone git@github.com:azobrist/$1.git
+.bash_aliases:29:+	if [ $? -ne 0 ]; then
+.bash_aliases:30:+		echo "device key not recognized"
+.bash_aliases:31:+		git clone http://github.com/azobrist/$1.git
+.bash_aliases:32:+	fi
+.bash_aliases:33: 	cd $1
+.bash_aliases:34: }
+.bash_aliases:35: gitcreateremote(){
