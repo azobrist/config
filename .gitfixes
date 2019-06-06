@@ -1,8 +1,8 @@
 .bash_aliases:54: 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 .bash_aliases:55: 	FILES=$(git diff --name-only)
 .bash_aliases:56: 	git add .
-.bash_aliases:57:-	STR=$'quick fix - see .gitfixesn$FILES'
-.bash_aliases:57:+	STR=$'quick fix - see .gitfixesn"$"FILES'
+.bash_aliases:57:-	STR=$'quick fix - see .gitfixesn"$"FILES'
+.bash_aliases:57:+	STR=$'quick fix - see .gitfixesn"$FILES"'
 .bash_aliases:58: 	git commit -m "$STR"
 .bash_aliases:59: 	git push origin $BRANCH
 .bash_aliases:60: }
