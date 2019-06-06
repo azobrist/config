@@ -1,15 +1,8 @@
-.bash_aliases:7: alias brc='source ~/.bashrc'
-.bash_aliases:8: alias gitfilehist='git log -p --'
-.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10:+alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
-.bash_aliases:11: cleandockerimgs(){
-.bash_aliases:12: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
-.bash_aliases:13: 	docker rm $(docker ps -a -q -f status=exited)
 .bash_aliases:54: 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 .bash_aliases:55: 	FILES=$(git diff --name-only)
 .bash_aliases:56: 	git add .
-.bash_aliases:57:-	STR=$'quick fix - see .gitfixesn$FILES'
-.bash_aliases:57:+	STR=$'quick fix - see .gitfixesn$$FILES'
+.bash_aliases:57:-	STR=$'quick fix - see .gitfixesn$$FILES'
+.bash_aliases:57:+	STR=$'quick fix - see .gitfixesn$FILES'
 .bash_aliases:58: 	git commit -m "$STR"
 .bash_aliases:59: 	git push origin $BRANCH
 .bash_aliases:60: }
