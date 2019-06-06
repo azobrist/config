@@ -7,6 +7,7 @@ alias cd..="cd .."
 alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
+alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
 cleandockerimgs(){
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
 	docker rm $(docker ps -a -q -f status=exited)
@@ -53,7 +54,7 @@ gitfixes(){
 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only)
 	git add .
-	STR=$'quick fix - see .gitfixes\n$FILES'
+	STR=$'quick fix - see .gitfixes\n$$FILES'
 	git commit -m "$STR"
 	git push origin $BRANCH
 }
