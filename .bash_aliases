@@ -55,8 +55,8 @@ gitfixes(){
 	FILES=$(git diff --name-only)
 	echo $FILES
 	git add .
-	STR=$'quick fix - see .gaitfixes\n$(echo $FILES)'
-	git commit -m "$STR"
+	STR=$'quick fix - see .gaitfixes\n'
+	git commit -m "$STR$FILES"
 	git push origin $BRANCH
 }
 gitcommit(){

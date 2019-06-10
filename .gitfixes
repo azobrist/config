@@ -1,8 +1,10 @@
 .bash_aliases:55: 	FILES=$(git diff --name-only)
 .bash_aliases:56: 	echo $FILES
 .bash_aliases:57: 	git add .
-.bash_aliases:58:-	STR="quick fix - see .gaitfixesn${FILES}"
-.bash_aliases:58:+	STR=$'quick fix - see .gaitfixesn$(echo $FILES)'
-.bash_aliases:59: 	git commit -m "$STR"
+.bash_aliases:58:-	STR=$'quick fix - see .gaitfixesn$(echo $FILES)'
+.bash_aliases:58:-	git commit -m "$STR"
+.bash_aliases:58:+	STR=$'quick fix - see .gaitfixesn'
+.bash_aliases:59:+	git commit -m "$STR$FILES"
 .bash_aliases:60: 	git push origin $BRANCH
 .bash_aliases:61: }
+.bash_aliases:62: gitcommit(){
