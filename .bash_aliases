@@ -53,7 +53,6 @@ gitfixes(){
 	echo "Fixing $BRANCH"
 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only)
-	echo $FILES
 	git add .
 	STR=$'quick fix - see .gaitfixes\n'
 	git commit -m "$STR$FILES"
