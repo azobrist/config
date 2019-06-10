@@ -48,6 +48,13 @@ gitcreateremote(){
 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
 	gitfixes
 }
+gitcreate(){
+	repo_name=$1
+	test -z $repo_name && echo "Repo name required." 1>&2
+	if [ $? -ne 0 ]; then
+		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}"	
+	fi
+}
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Fixing $BRANCH"
