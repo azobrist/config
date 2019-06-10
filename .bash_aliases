@@ -48,11 +48,24 @@ gitcreateremote(){
 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
 	gitfixes
 }
+startproject(){
+	name=$(basename $(pwd))
+	githubcreate $name
+	if [ $? -ne 0 ]; then
+		git init
+		git remote add origin git@github.com:azobrist/$name.git
+		gitfixes
+	else
+		echo "failed to create github repo, local project untouched"
+	fi
+}
 githubcreate(){
 	repo_name=$1
 	test -z $repo_name && echo "Repo name required." 1>&2
 	if [ $? -ne 0 ]; then
-		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}"	
+		echo "creating public repo $repo_name"
+		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep "Bad credentials\|Repository creation failed"	
+		return $?
 	fi
 }
 gitfixes(){
