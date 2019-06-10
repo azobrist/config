@@ -15,7 +15,7 @@ cleandockerimgs(){
 qfind(){
 	find . -name *$1*
 }
-cloneoffice(){
+cloneowork(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git clone git@$IP:/opt/git/$1.git
@@ -33,19 +33,22 @@ clonegithub(){
 	fi
 	cd $1
 }
-gitcreateremote(){
-	set -e
-	PROJ=$(basename $(pwd))
-	if [ -d $PROJ.git ]; then
-		rm -r $PROJ.git
+gitlocalcreate(){
+	if [ ! -f ~/netdevlist/gitwork ]; then
+		echo "need to add local network to netdevlist"
+		return
 	fi
-	mkdir $PROJ.git && cd $PROJ.git
+	name=$(basename $(pwd))
+	if [ -d $name.git ]; then
+		rm -r $name.git
+	fi
+	mkdir $name.git && cd $name.git
 	git init --bare
 	cd ..
-	sendto git $PROJ.git
-	rm -r $PROJ.git
+	sendto gitwork /opt/git/$name.git
+	rm -r $name.git
 	git init
-	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
+	git remote add origin git@$(cat ~/netdevlist/gitwork):~/$name.git
 	gitfixes
 }
 startproject(){
@@ -158,12 +161,12 @@ sendto(){
 	DEV=$1
 	IP=$(cat ~/netdevlist/$DEV)
 	FILE=${2##*/}
-	echo "sending $FILE to $DEV@$IP:~/$2"
+	echo "sending $FILE to $DEV@$IP:$2"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $FILE ]; then
-			scp -r $FILE  $DEV@$IP:~/$2
+			scp -r $FILE  $DEV@$IP:$2
 		else
-			scp $FILE $DEV@$IP:~/$2
+			scp $FILE $DEV@$IP:$2
 		fi
 	else
 		echo "Sever not online @$IP"
@@ -191,6 +194,18 @@ addnetdev(){
 addnetdir(){
 	DIR=$1
 	echo "$DIR" >> ~/netdevlist/common
+}
+aptrestoretools(){
+	list=~/config/apttools
+	sudo apt install -y $(grep -vE "^\s*#" $list | tr "\n" " ")
+}
+aptaddtool(){
+	list=~/config/apttools
+	if [ ! -f $list ]; then
+		touch $list
+	fi
+	echo "$1" >> $list
+	sudo apt install -y $1
 }
 gitshortdiff() {
 	git diff | diff-lines
