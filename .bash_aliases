@@ -29,7 +29,7 @@ clonegithub(){
 	git clone git@github.com:azobrist/$1.git
 	if [ $? -ne 0 ]; then
 		echo "device key not recognized"
-		git clone http://github.com/azobrist/$1.git
+		git clone git@github.com:azobrist/$1.git
 	fi
 	cd $1
 }

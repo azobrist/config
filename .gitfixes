@@ -1,72 +1,8 @@
-.bash_aliases:15: qfind(){
-.bash_aliases:16: 	find . -name *$1*
-.bash_aliases:17: }
-.bash_aliases:18:-cloneoffice(){
-.bash_aliases:18:+cloneowork(){
-.bash_aliases:19: 	IP="10.70.16.118"
-.bash_aliases:20: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:21: 		git clone git@$IP:/opt/git/$1.git
+.bash_aliases:29: 	git clone git@github.com:azobrist/$1.git
+.bash_aliases:30: 	if [ $? -ne 0 ]; then
+.bash_aliases:31: 		echo "device key not recognized"
+.bash_aliases:32:-		git clone http://github.com/azobrist/$1.git
+.bash_aliases:32:+		git clone git@github.com:azobrist/$1.git
 .bash_aliases:33: 	fi
 .bash_aliases:34: 	cd $1
 .bash_aliases:35: }
-.bash_aliases:36:-gitcreateremote(){
-.bash_aliases:36:-	set -e
-.bash_aliases:36:-	PROJ=$(basename $(pwd))
-.bash_aliases:36:-	if [ -d $PROJ.git ]; then
-.bash_aliases:36:-		rm -r $PROJ.git
-.bash_aliases:36:+gitlocalcreate(){
-.bash_aliases:37:+	if [ ! -f ~/netdevlist/gitwork ]; then
-.bash_aliases:38:+		echo "need to add local network to netdevlist"
-.bash_aliases:39:+		return
-.bash_aliases:40: 	fi
-.bash_aliases:41:-	mkdir $PROJ.git && cd $PROJ.git
-.bash_aliases:41:+	name=$(basename $(pwd))
-.bash_aliases:42:+	if [ -d $name.git ]; then
-.bash_aliases:43:+		rm -r $name.git
-.bash_aliases:44:+	fi
-.bash_aliases:45:+	mkdir $name.git && cd $name.git
-.bash_aliases:46: 	git init --bare
-.bash_aliases:47: 	cd ..
-.bash_aliases:48:-	sendto git $PROJ.git
-.bash_aliases:48:-	rm -r $PROJ.git
-.bash_aliases:48:+	sendto gitwork /opt/git/$name.git
-.bash_aliases:49:+	rm -r $name.git
-.bash_aliases:50: 	git init
-.bash_aliases:51:-	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
-.bash_aliases:51:+	git remote add origin git@$(cat ~/netdevlist/gitwork):~/$name.git
-.bash_aliases:52: 	gitfixes
-.bash_aliases:53: }
-.bash_aliases:54: startproject(){
-.bash_aliases:161: 	DEV=$1
-.bash_aliases:162: 	IP=$(cat ~/netdevlist/$DEV)
-.bash_aliases:163: 	FILE=${2##*/}
-.bash_aliases:164:-	echo "sending $FILE to $DEV@$IP:~/$2"
-.bash_aliases:164:+	echo "sending $FILE to $DEV@$IP:$2"
-.bash_aliases:165: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:166: 		if [ -d $FILE ]; then
-.bash_aliases:167:-			scp -r $FILE  $DEV@$IP:~/$2
-.bash_aliases:167:+			scp -r $FILE  $DEV@$IP:$2
-.bash_aliases:168: 		else
-.bash_aliases:169:-			scp $FILE $DEV@$IP:~/$2
-.bash_aliases:169:+			scp $FILE $DEV@$IP:$2
-.bash_aliases:170: 		fi
-.bash_aliases:171: 	else
-.bash_aliases:172: 		echo "Sever not online @$IP"
-.bash_aliases:195: 	DIR=$1
-.bash_aliases:196: 	echo "$DIR" >> ~/netdevlist/common
-.bash_aliases:197: }
-.bash_aliases:198:+aptrestoretools(){
-.bash_aliases:199:+	list=~/config/apttools
-.bash_aliases:200:+	sudo apt install -y $(grep -vE "^s*#" $list | tr "n" " ")
-.bash_aliases:201:+}
-.bash_aliases:202:+aptaddtool(){
-.bash_aliases:203:+	list=~/config/apttools
-.bash_aliases:204:+	if [ ! -f $list ]; then
-.bash_aliases:205:+		touch $list
-.bash_aliases:206:+	fi
-.bash_aliases:207:+	echo "$1" >> $list
-.bash_aliases:208:+	sudo apt install -y $1
-.bash_aliases:209:+}
-.bash_aliases:210: gitshortdiff() {
-.bash_aliases:211: 	git diff | diff-lines
-.bash_aliases:212: }
