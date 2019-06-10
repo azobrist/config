@@ -48,7 +48,7 @@ gitcreateremote(){
 	git remote add pi git@$(cat ~/netdevlist/git):~/$PROJ.git
 	gitfixes
 }
-gitcreate(){
+githubcreate(){
 	repo_name=$1
 	test -z $repo_name && echo "Repo name required." 1>&2
 	if [ $? -ne 0 ]; then
