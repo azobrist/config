@@ -91,12 +91,15 @@ shellme(){
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
 	if [ $# -gt 1 ]; then
-		isnum $2
+		isnum $2 >/dev/null
 		if [ $? -eq 0 ]; then
-			echo "history pulled"
-			history $2 | cut -c 8- >> $1.sh
+			echo "last $2 cmds in history pulled"
+			let rng=$2+1
+			history $rng | cut -c 8- >> $1.sh
+			sed -i '$ d' $1.sh
+			echo "$1 created"
 		else
-			echo "need to enter number $2"
+			echo "need to enter number not: $2"
 		fi	
 	else
 		vim $1.sh
