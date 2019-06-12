@@ -1,8 +1,13 @@
-.bash_aliases:29: 	git clone git@github.com:azobrist/$1.git
-.bash_aliases:30: 	if [ $? -ne 0 ]; then
-.bash_aliases:31: 		echo "device key not recognized"
-.bash_aliases:32:-		git clone http://github.com/azobrist/$1.git
-.bash_aliases:32:+		git clone git@github.com:azobrist/$1.git
-.bash_aliases:33: 	fi
-.bash_aliases:34: 	cd $1
-.bash_aliases:35: }
+.bash_aliases:8: alias gitfilehist='git log -p --'
+.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
+.bash_aliases:10: alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
+.bash_aliases:11:-cleandockerimgs(){
+.bash_aliases:11:+cleandockercontainers(){
+.bash_aliases:12: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
+.bash_aliases:13: 	docker rm $(docker ps -a -q -f status=exited)
+.bash_aliases:14: }
+apttools:5: inxi
+apttools:6: silversearcher-ag
+apttools:7: net-tools
+apttools:8:+gparted
+apttools:9:+docker.io

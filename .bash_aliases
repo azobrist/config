@@ -8,7 +8,7 @@ alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
-cleandockerimgs(){
+cleandockercontainers(){
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
 	docker rm $(docker ps -a -q -f status=exited)
 }
