@@ -1,13 +1,10 @@
-.bash_aliases:8: alias gitfilehist='git log -p --'
-.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10: alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
-.bash_aliases:11:-cleandockerimgs(){
-.bash_aliases:11:+cleandockercontainers(){
 .bash_aliases:12: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
 .bash_aliases:13: 	docker rm $(docker ps -a -q -f status=exited)
 .bash_aliases:14: }
-apttools:5: inxi
-apttools:6: silversearcher-ag
-apttools:7: net-tools
-apttools:8:+gparted
-apttools:9:+docker.io
+.bash_aliases:15:+cleandockerimages(){
+.bash_aliases:16:+	read -p "This will wipe all images off this machine!! Enter to continue..."
+.bash_aliases:17:+	docker rmi $(docker images -a -q)
+.bash_aliases:18:+}
+.bash_aliases:19: qfind(){
+.bash_aliases:20: 	find . -name *$1*
+.bash_aliases:21: }

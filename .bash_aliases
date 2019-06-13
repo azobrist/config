@@ -12,6 +12,10 @@ cleandockercontainers(){
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
 	docker rm $(docker ps -a -q -f status=exited)
 }
+cleandockerimages(){
+	read -p "This will wipe all images off this machine!! Enter to continue..."
+	docker rmi $(docker images -a -q)
+}
 qfind(){
 	find . -name *$1*
 }
