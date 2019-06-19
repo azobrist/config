@@ -1,10 +1,4 @@
-.bash_aliases:12: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
-.bash_aliases:13: 	docker rm $(docker ps -a -q -f status=exited)
-.bash_aliases:14: }
-.bash_aliases:15:+cleandockerimages(){
-.bash_aliases:16:+	read -p "This will wipe all images off this machine!! Enter to continue..."
-.bash_aliases:17:+	docker rmi $(docker images -a -q)
-.bash_aliases:18:+}
-.bash_aliases:19: qfind(){
-.bash_aliases:20: 	find . -name *$1*
-.bash_aliases:21: }
+apttools:7: net-tools
+apttools:8: gparted
+apttools:9: docker.io
+apttools:10:+openssh-server
