@@ -18,3 +18,7 @@
 .bash_aliases:23: 	IP="10.70.16.118"
 .bash_aliases:24: 	if [ "$(knockknock $IP)" == "who's there??" ];then
 .bash_aliases:25: 		git clone git@$IP:/opt/git/$1.git
+apttools:7: net-tools
+apttools:8: gparted
+apttools:9: docker.io
+apttools:10:+openssh-server
