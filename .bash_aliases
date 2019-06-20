@@ -7,10 +7,10 @@ alias cd..="cd .."
 alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
-alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
+alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 cleandockercontainers(){
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
-	docker rm $(docker ps -a -q -f status=exited)
+	docker rm $(docker ps -a -q)
 }
 cleandockerimages(){
 	read -p "This will wipe all images off this machine!! Enter to continue..."
@@ -19,7 +19,7 @@ cleandockerimages(){
 qfind(){
 	find . -name *$1*
 }
-cloneowork(){
+clonework(){
 	IP="10.70.16.118"
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		git clone git@$IP:/opt/git/$1.git
