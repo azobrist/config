@@ -1,24 +1,12 @@
-.bash_aliases:7: alias brc='source ~/.bashrc'
-.bash_aliases:8: alias gitfilehist='git log -p --'
 .bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10:-alias notetake='vim $(date +%d%m%Y_%H:%M:%S)'
-.bash_aliases:10:+alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
+.bash_aliases:10: alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 .bash_aliases:11: cleandockercontainers(){
-.bash_aliases:12: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
-.bash_aliases:13:-	docker rm $(docker ps -a -q -f status=exited)
-.bash_aliases:13:+	docker rm $(docker ps -a -q)
-.bash_aliases:14: }
-.bash_aliases:15: cleandockerimages(){
-.bash_aliases:16: 	read -p "This will wipe all images off this machine!! Enter to continue..."
-.bash_aliases:19: qfind(){
-.bash_aliases:20: 	find . -name *$1*
-.bash_aliases:21: }
-.bash_aliases:22:-cloneowork(){
-.bash_aliases:22:+clonework(){
-.bash_aliases:23: 	IP="10.70.16.118"
-.bash_aliases:24: 	if [ "$(knockknock $IP)" == "who's there??" ];then
-.bash_aliases:25: 		git clone git@$IP:/opt/git/$1.git
-apttools:7: net-tools
-apttools:8: gparted
-apttools:9: docker.io
-apttools:10:+openssh-server
+.bash_aliases:12:+	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }	
+.bash_aliases:13: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
+.bash_aliases:14: 	docker rm $(docker ps -a -q)
+.bash_aliases:15: }
+.bash_aliases:16: cleandockerimages(){
+.bash_aliases:17:+	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }
+.bash_aliases:18: 	read -p "This will wipe all images off this machine!! Enter to continue..."
+.bash_aliases:19: 	docker rmi $(docker images -a -q)
+.bash_aliases:20: }
