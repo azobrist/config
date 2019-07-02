@@ -8,6 +8,9 @@ alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
+# wrapit(){ 
+# 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
+# }
 cleandockercontainers(){
 	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }	
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
