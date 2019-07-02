@@ -113,8 +113,11 @@ gitignore(){
 		if [ ! -f .gitignore ]; then
 			touch .gitignore
 		fi
-		echo "Adding $1 to .gitignore"
-		echo $1 >> .gitignore
+		for i in $@
+		do
+			echo "Adding $i to .gitignore"
+			echo $i >> .gitignore
+		done
 	else
 		echo "Not a git repo"
 	fi

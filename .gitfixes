@@ -1,9 +1,13 @@
-.bash_aliases:8: alias gitfilehist='git log -p --'
-.bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
-.bash_aliases:10: alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
-.bash_aliases:11:+# wrapit(){ 
-.bash_aliases:12:+# 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
-.bash_aliases:13:+# }
-.bash_aliases:14: cleandockercontainers(){
-.bash_aliases:15: 	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }	
-.bash_aliases:16: 	read -p "This will wipe all containers off this machine!! Enter to continue..."
+.bash_aliases:113: 		if [ ! -f .gitignore ]; then
+.bash_aliases:114: 			touch .gitignore
+.bash_aliases:115: 		fi
+.bash_aliases:116:-		echo "Adding $1 to .gitignore"
+.bash_aliases:116:-		echo $1 >> .gitignore
+.bash_aliases:116:+		for i in $@
+.bash_aliases:117:+		do
+.bash_aliases:118:+			echo "Adding $i to .gitignore"
+.bash_aliases:119:+			echo $i >> .gitignore
+.bash_aliases:120:+		done
+.bash_aliases:121: 	else
+.bash_aliases:122: 		echo "Not a git repo"
+.bash_aliases:123: 	fi
