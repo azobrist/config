@@ -93,7 +93,7 @@ gitfixes(){
 gitsmartcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Smart Commiting $BRANCH"
-	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only --staged)
 	STR=$'files modified - add descriptions as needed or see .gitfixes for all modifications\n'
 	git commit -m "$STR$FILES"
@@ -101,7 +101,9 @@ gitsmartcommit(){
 		git commit --amend
 	else
 		echo "nothing staged to commit"
+		git co -- .gitfixes
 	fi
+	echo "this is a test"
 }
 gitcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
