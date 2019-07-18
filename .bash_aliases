@@ -97,7 +97,11 @@ gitsmartcommit(){
 	FILES=$(git diff --name-only --staged)
 	STR=$'files modified - add descriptions as needed or see .gitfixes for all modifications\n'
 	git commit -m "$STR$FILES"
-	git commit --amend
+	if [ $? -eq 0 ]; then
+		git commit --amend
+	else
+		echo "nothing staged to commit"
+	fi
 }
 gitcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
