@@ -90,6 +90,15 @@ gitfixes(){
 	git commit -m "$STR$FILES"
 	git push origin $BRANCH
 }
+gitsmartcommit(){
+	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+	echo "Smart Commiting $BRANCH"
+	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+	FILES=$(git diff --name-only --staged)
+	STR=$'quick fix - see .gitfixes\n'
+	git commit -m "$STR$FILES"
+	git commit --amend
+}
 gitcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Finishing $BRANCH"

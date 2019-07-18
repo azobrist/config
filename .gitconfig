@@ -16,3 +16,6 @@
 [push]
 	followingTags = true
 	default = simple
+[core]
+	autocrlf = false
+	whitespace = cr-at-eol
