@@ -95,7 +95,7 @@ gitsmartcommit(){
 	echo "Smart Commiting $BRANCH"
 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only --staged)
-	STR=$'quick fix - see .gitfixes\n'
+	STR=$'files modified - add descriptions as needed or see .gitfixes for all modifications\n'
 	git commit -m "$STR$FILES"
 	git commit --amend
 }

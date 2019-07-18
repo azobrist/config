@@ -1,13 +1,8 @@
-.bash_aliases:113: 		if [ ! -f .gitignore ]; then
-.bash_aliases:114: 			touch .gitignore
-.bash_aliases:115: 		fi
-.bash_aliases:116:-		echo "Adding $1 to .gitignore"
-.bash_aliases:116:-		echo $1 >> .gitignore
-.bash_aliases:116:+		for i in $@
-.bash_aliases:117:+		do
-.bash_aliases:118:+			echo "Adding $i to .gitignore"
-.bash_aliases:119:+			echo $i >> .gitignore
-.bash_aliases:120:+		done
-.bash_aliases:121: 	else
-.bash_aliases:122: 		echo "Not a git repo"
-.bash_aliases:123: 	fi
+.bash_aliases:95: 	echo "Smart Commiting $BRANCH"
+.bash_aliases:96: 	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+.bash_aliases:97: 	FILES=$(git diff --name-only --staged)
+.bash_aliases:98:-	STR=$'quick fix - see .gitfixesn'
+.bash_aliases:98:+	STR=$'files modified - add descriptions as needed or see .gitfixes for all modificationsn'
+.bash_aliases:99: 	git commit -m "$STR$FILES"
+.bash_aliases:100: 	git commit --amend
+.bash_aliases:101: }
