@@ -103,7 +103,6 @@ gitsmartcommit(){
 		echo "nothing staged to commit"
 		git co -- .gitfixes
 	fi
-	echo "this is a test"
 }
 gitcommit(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
