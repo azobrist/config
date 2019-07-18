@@ -1,17 +1,7 @@
-.bash_aliases:93: gitsmartcommit(){
 .bash_aliases:94: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 .bash_aliases:95: 	echo "Smart Commiting $BRANCH"
-.bash_aliases:96:-	gitshortdiff | sed /^.gitfixes/d > .gitfixes
-.bash_aliases:96:+	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
-.bash_aliases:97: 	FILES=$(git diff --name-only --staged)
-.bash_aliases:98: 	STR=$'files modified - add descriptions as needed or see .gitfixes for all modificationsn'
-.bash_aliases:99: 	git commit -m "$STR$FILES"
-.bash_aliases:101: 		git commit --amend
-.bash_aliases:102: 	else
-.bash_aliases:103: 		echo "nothing staged to commit"
-.bash_aliases:104:+		git co -- .gitfixes
-.bash_aliases:105: 	fi
-.bash_aliases:106:+	echo "this is a test"
-.bash_aliases:107: }
-.bash_aliases:108: gitcommit(){
-.bash_aliases:109: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:96: 	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
+.bash_aliases:97:+	git add .gitfixes
+.bash_aliases:98: 	FILES=$(git diff --name-only --staged)
+.bash_aliases:99: 	STR=$'files modified - add descriptions as needed or see .gitfixes for all modificationsn'
+.bash_aliases:100: 	git commit -m "$STR$FILES"
