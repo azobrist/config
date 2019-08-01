@@ -1,7 +1,41 @@
-.bash_aliases:94: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:95: 	echo "Smart Commiting $BRANCH"
-.bash_aliases:96: 	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
-.bash_aliases:97:+	git add .gitfixes
-.bash_aliases:98: 	FILES=$(git diff --name-only --staged)
-.bash_aliases:99: 	STR=$'files modified - add descriptions as needed or see .gitfixes for all modificationsn'
-.bash_aliases:100: 	git commit -m "$STR$FILES"
+.bash_aliases:76: 	test -z $repo_name && echo "Repo name required." 1>&2
+.bash_aliases:77: 	if [ $? -ne 0 ]; then
+.bash_aliases:78: 		echo "creating public repo $repo_name"
+.bash_aliases:79:-		curl -u 'azobrist' https://api.github.com/user/repos -d "{"name":"$repo_name"}" | grep "Bad credentials|Repository creation failed"	
+.bash_aliases:79:+		curl -u 'azobrist' https://api.github.com/user/repos -d "{"name":"$repo_name","private":"true"}" | grep "Bad credentials|Repository creation failed"	
+.bash_aliases:80: 		return $?
+.bash_aliases:81: 	fi
+.bash_aliases:82: }
+.bash_aliases:83: gitfixes(){
+.bash_aliases:84: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:85: 	echo "Fixing $BRANCH"
+.bash_aliases:86:-	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+.bash_aliases:86:+	gitlinediff | sed /^.gitfixes/d > .gitfixes
+.bash_aliases:87: 	FILES=$(git diff --name-only)
+.bash_aliases:88: 	git add .
+.bash_aliases:89: 	STR=$'quick fix - see .gitfixesn'
+.bash_aliases:138: 	fi
+.bash_aliases:139: }
+.bash_aliases:140: shellme(){
+.bash_aliases:141:+	if [ $# -eq 0 ]; then
+.bash_aliases:142:+		echo "shellme name {#lines}"
+.bash_aliases:143:+	fi
+.bash_aliases:144: 	echo "#!/bin/bash" > $1.sh
+.bash_aliases:145: 	chmod +x $1.sh
+.bash_aliases:146: 	if [ $# -gt 1 ]; then
+.bash_aliases:237: 	echo "$1" >> $list
+.bash_aliases:238: 	sudo apt install -y $1
+.bash_aliases:239: }
+.bash_aliases:240:-gitshortdiff() {
+.bash_aliases:240:-	git diff | diff-lines
+.bash_aliases:240:+gitlinediff() {
+.bash_aliases:241:+	if [ $# -eq 2 ]; then
+.bash_aliases:242:+		git diff $1 $2 | diff-lines
+.bash_aliases:243:+	elif [ $# -eq 1 ]; then
+.bash_aliases:244:+		git diff $1 | diff-lines
+.bash_aliases:245:+	else
+.bash_aliases:246:+		git diff | diff-lines
+.bash_aliases:247:+	fi
+.bash_aliases:248: }
+.bash_aliases:249: diff-lines() {
+.bash_aliases:250:     local path=

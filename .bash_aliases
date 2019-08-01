@@ -76,14 +76,14 @@ githubcreate(){
 	test -z $repo_name && echo "Repo name required." 1>&2
 	if [ $? -ne 0 ]; then
 		echo "creating public repo $repo_name"
-		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep "Bad credentials\|Repository creation failed"	
+		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\",\"private\":\"true\"}" | grep "Bad credentials\|Repository creation failed"	
 		return $?
 	fi
 }
 gitfixes(){
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Fixing $BRANCH"
-	gitshortdiff | sed /^.gitfixes/d > .gitfixes
+	gitlinediff | sed /^.gitfixes/d > .gitfixes
 	FILES=$(git diff --name-only)
 	git add .
 	STR=$'quick fix - see .gitfixes\n'
@@ -138,6 +138,9 @@ gitignore(){
 	fi
 }
 shellme(){
+	if [ $# -eq 0 ]; then
+		echo "shellme name {#lines}"
+	fi
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
 	if [ $# -gt 1 ]; then
@@ -234,8 +237,14 @@ aptaddtool(){
 	echo "$1" >> $list
 	sudo apt install -y $1
 }
-gitshortdiff() {
-	git diff | diff-lines
+gitlinediff() {
+	if [ $# -eq 2 ]; then
+		git diff $1 $2 | diff-lines
+	elif [ $# -eq 1 ]; then
+		git diff $1 | diff-lines
+	else
+		git diff | diff-lines
+	fi
 }
 diff-lines() {
     local path=
