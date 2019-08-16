@@ -12,13 +12,13 @@ alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
 bincmp(){
-	hash colordiff diff-highlight
-	if [ $? -ne 0 ]; then
+	hash colordiff diff-highlight pv
+	if [ $? -ne 0 ] || [ $# -ne 2 ]; then
 		exit 1
 	fi
-	cat $1 | od -x > $1.tmp
-        cat $2 | od -x > $2.tmp	
-	diff $1.tmp | $2.tmp | colordiff | diff-highlight
+	pv $1 | od -x > $1.tmp
+        pv $2 | od -x > $2.tmp	
+	diff -u $1.tmp $2.tmp | colordiff | diff-highlight
 	rm $1.tmp $2.tmp	
 }
 cleandockercontainers(){
