@@ -1,14 +1,16 @@
-.bash_aliases:140: shellme(){
-.bash_aliases:141: 	if [ $# -eq 0 ]; then
-.bash_aliases:142: 		echo "shellme name {#lines}"
-.bash_aliases:143:+		exit 1
-.bash_aliases:144: 	fi
-.bash_aliases:145: 	echo "#!/bin/bash" > $1.sh
-.bash_aliases:146: 	chmod +x $1.sh
-apttools:6: silversearcher-ag
-apttools:7: net-tools
-apttools:8: gparted
-apttools:9:-docker.io
-apttools:9: openssh-server
-apttools:10:+minicom
-apttools:11:+pv
+.bash_aliases:11: # wrapit(){ 
+.bash_aliases:12: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
+.bash_aliases:13: # }
+.bash_aliases:14:+bincmp(){
+.bash_aliases:15:+	hash colordiff diff-highlight
+.bash_aliases:16:+	if [ $? -ne 0 ]; then
+.bash_aliases:17:+		exit 1
+.bash_aliases:18:+	fi
+.bash_aliases:19:+	cat $1 | od -x > $1.tmp
+.bash_aliases:20:+        cat $2 | od -x > $2.tmp	
+.bash_aliases:21:+	diff $1.tmp | $2.tmp | colordiff | diff-highlight
+.bash_aliases:22:+	rm $1.tmp $2.tmp	
+.bash_aliases:23:+}
+.bash_aliases:24: cleandockercontainers(){
+.bash_aliases:25: 	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }	
+.bash_aliases:26: 	read -p "This will wipe all containers off this machine!! Enter to continue..."

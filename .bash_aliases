@@ -11,6 +11,16 @@ alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
+bincmp(){
+	hash colordiff diff-highlight
+	if [ $? -ne 0 ]; then
+		exit 1
+	fi
+	cat $1 | od -x > $1.tmp
+        cat $2 | od -x > $2.tmp	
+	diff $1.tmp | $2.tmp | colordiff | diff-highlight
+	rm $1.tmp $2.tmp	
+}
 cleandockercontainers(){
 	hash docker 2>/dev/null || { echo >&2 "I require docker but it's not installed.  Aborting."; return; }	
 	read -p "This will wipe all containers off this machine!! Enter to continue..."
