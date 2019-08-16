@@ -6,5 +6,6 @@ inxi
 silversearcher-ag
 net-tools
 gparted
-docker.io
 openssh-server
+minicom
+pv

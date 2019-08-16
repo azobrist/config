@@ -140,6 +140,7 @@ gitignore(){
 shellme(){
 	if [ $# -eq 0 ]; then
 		echo "shellme name {#lines}"
+		exit 1
 	fi
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
