@@ -1,18 +1,40 @@
-.bash_aliases:12: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
-.bash_aliases:13: # }
 .bash_aliases:14: bincmp(){
-.bash_aliases:15:-	hash colordiff diff-highlight
-.bash_aliases:15:-	if [ $? -ne 0 ]; then
-.bash_aliases:15:+	hash colordiff diff-highlight pv
-.bash_aliases:16:+	if [ $? -ne 0 ] || [ $# -ne 2 ]; then
-.bash_aliases:17: 		exit 1
+.bash_aliases:15: 	hash colordiff diff-highlight pv
+.bash_aliases:16: 	if [ $? -ne 0 ] || [ $# -ne 2 ]; then
+.bash_aliases:17:-		exit 1
+.bash_aliases:17:+		return
 .bash_aliases:18: 	fi
-.bash_aliases:19:-	cat $1 | od -x > $1.tmp
-.bash_aliases:19:-        cat $2 | od -x > $2.tmp	
-.bash_aliases:19:-	diff $1.tmp | $2.tmp | colordiff | diff-highlight
-.bash_aliases:19:+	pv $1 | od -x > $1.tmp
-.bash_aliases:20:+        pv $2 | od -x > $2.tmp	
-.bash_aliases:21:+	diff -u $1.tmp $2.tmp | colordiff | diff-highlight
-.bash_aliases:22: 	rm $1.tmp $2.tmp	
-.bash_aliases:23: }
-.bash_aliases:24: cleandockercontainers(){
+.bash_aliases:19: 	pv $1 | od -x > $1.tmp
+.bash_aliases:20:         pv $2 | od -x > $2.tmp	
+.bash_aliases:150: shellme(){
+.bash_aliases:151: 	if [ $# -eq 0 ]; then
+.bash_aliases:152: 		echo "shellme name {#lines}"
+.bash_aliases:153:-		exit 1
+.bash_aliases:153:+		return
+.bash_aliases:154: 	fi
+.bash_aliases:155: 	echo "#!/bin/bash" > $1.sh
+.bash_aliases:156: 	chmod +x $1.sh
+.bash_aliases:185: getfrom(){
+.bash_aliases:186: 	if [ $# -eq 0 ]; then
+.bash_aliases:187: 		echo "getfrom <device> <path/to/file>"
+.bash_aliases:188:-		exit 1
+.bash_aliases:188:+		return
+.bash_aliases:189: 	fi
+.bash_aliases:190: 	DEV=$1
+.bash_aliases:191: 	DIR=$2
+.bash_aliases:202: 	DEV=$1
+.bash_aliases:203: 	IP=$(cat ~/netdevlist/$DEV)
+.bash_aliases:204: 	FILE=${2##*/}
+.bash_aliases:205:-	echo "sending $FILE to $DEV@$IP:$2"
+.bash_aliases:205:+	DEST=$DEV@$(cat ~/netdevlist/$DEV):/home/$DEV/$2
+.bash_aliases:206:+	echo "sending $FILE to $DEST"	
+.bash_aliases:207: 	if [ "$(knockknock $IP)" == "who's there??" ];then
+.bash_aliases:208: 		if [ -d $FILE ]; then
+.bash_aliases:209:-			scp -r $FILE  $DEV@$IP:$2
+.bash_aliases:209:+			scp -r $FILE $DEST
+.bash_aliases:210: 		else
+.bash_aliases:211:-			scp $FILE $DEV@$IP:$2
+.bash_aliases:211:+			scp $FILE $DEST
+.bash_aliases:212: 		fi
+.bash_aliases:213: 	else
+.bash_aliases:214: 		echo "Sever not online @$IP"

@@ -14,7 +14,7 @@ alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 bincmp(){
 	hash colordiff diff-highlight pv
 	if [ $? -ne 0 ] || [ $# -ne 2 ]; then
-		exit 1
+		return
 	fi
 	pv $1 | od -x > $1.tmp
         pv $2 | od -x > $2.tmp	
@@ -150,7 +150,7 @@ gitignore(){
 shellme(){
 	if [ $# -eq 0 ]; then
 		echo "shellme name {#lines}"
-		exit 1
+		return
 	fi
 	echo "#!/bin/bash" > $1.sh
 	chmod +x $1.sh
@@ -185,7 +185,7 @@ knockknock(){
 getfrom(){
 	if [ $# -eq 0 ]; then
 		echo "getfrom <device> <path/to/file>"
-		exit 1
+		return
 	fi
 	DEV=$1
 	DIR=$2
@@ -202,12 +202,13 @@ sendto(){
 	DEV=$1
 	IP=$(cat ~/netdevlist/$DEV)
 	FILE=${2##*/}
-	echo "sending $FILE to $DEV@$IP:$2"
+	DEST=$DEV@$(cat ~/netdevlist/$DEV):/home/$DEV/$2
+	echo "sending $FILE to $DEST"	
 	if [ "$(knockknock $IP)" == "who's there??" ];then
 		if [ -d $FILE ]; then
-			scp -r $FILE  $DEV@$IP:$2
+			scp -r $FILE $DEST
 		else
-			scp $FILE $DEV@$IP:$2
+			scp $FILE $DEST
 		fi
 	else
 		echo "Sever not online @$IP"
