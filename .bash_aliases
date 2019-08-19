@@ -8,9 +8,13 @@ alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
+source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
+includepath(){
+	export PATH=$PATH:$1
+}
 bincmp(){
 	hash colordiff diff-highlight pv
 	if [ $? -ne 0 ] || [ $# -ne 2 ]; then
@@ -170,12 +174,13 @@ shellme(){
 	fi
 }
 knockknock(){
-	IP="$1"
-	if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-		ping $IP -n 1 | grep "Destination Host Unreachable" > /dev/null
+	echo $1 | grep @ -q
+	if [ $? -eq 0 ]; then
+		IP=$(echo $1 | sed 's/.*@//')
 	else
-		ping -q -c1 $IP | grep "Destination Host Unreachable" > /dev/null
+		IP=$1
 	fi
+	ping -c1 $IP | grep "Destination Host Unreachable" > /dev/null
 	if [ $? -ne 0 ]; then
 		echo "who's there??"
 	else
@@ -184,54 +189,54 @@ knockknock(){
 }
 getfrom(){
 	if [ $# -eq 0 ]; then
-		echo "getfrom <device> <path/to/file>"
+		echo "getfrom <device> </path/to/file>"
 		return
 	fi
 	DEV=$1
-	DIR=$2
 	OPT=$3
-	IP=$(cat ~/netdevlist/$DEV)
-	echo "getting $2 from $DEV@$IP:~/$DIR"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		scp $OPT $DEV@$IP:~/$DIR .
+	LOC=$(cat ~/netdevlist/$DEV):$2
+	echo "getting $2 from $LOC"
+	if [ "$(knockknock $LOC)" == "who's there??" ];then
+		scp $OPT $LOC .
 	else
-		echo "Sever not online @$IP"
+		echo "Sever not online $LOC"
 	fi
 }
 sendto(){
 	DEV=$1
-	IP=$(cat ~/netdevlist/$DEV)
+	LOC=$(cat ~/netdevlist/$DEV)
+	USR=$(echo $LOC | sed 's/@.*//')
 	FILE=${2##*/}
-	DEST=$DEV@$(cat ~/netdevlist/$DEV):/home/$DEV/$2
+	DEST=$LOC:/home/$USR/$2
 	echo "sending $FILE to $DEST"	
-	if [ "$(knockknock $IP)" == "who's there??" ];then
+	if [ "$(knockknock $LOC)" == "who's there??" ];then
 		if [ -d $FILE ]; then
 			scp -r $FILE $DEST
 		else
 			scp $FILE $DEST
 		fi
 	else
-		echo "Sever not online @$IP"
+		echo "Sever not online $LOC"
 	fi
 }
 connect(){
 	DEV=$1
-	IP=$(cat ~/netdevlist/$DEV)
-	echo "connecting to $DEV@$IP terminal"
-	if [ "$(knockknock $IP)" == "who's there??" ];then
-		ssh $DEV@$IP
+	LOC=$(cat ~/netdevlist/$DEV)
+	echo "connecting to $LOC terminal"
+	if [ "$(knockknock $LOC)" == "who's there??" ];then
+		ssh $LOC
 	else
-		echo "Sever not online @$IP"
+		echo "Sever not online $LOC"
 	fi	
 }
 addnetdev(){
 	DEV=$1
-	IP=$2
+	LOC=$2
 	if [ ! -d ~/netdevlist ]; then
 		echo "creating netdevlist dir"
 		mkdir ~/netdevlist
 	fi
-	echo "$IP" > ~/netdevlist/$DEV
+	echo "$LOC" > ~/netdevlist/$DEV
 }
 addnetdir(){
 	DIR=$1
