@@ -12,6 +12,9 @@ source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
+catcsv(){
+    column -t -s, -n "$@" | less -F -S -X -K
+}
 includepath(){
 	export PATH=$PATH:$1
 }
