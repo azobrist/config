@@ -13,7 +13,7 @@ source ~/config/auto.bash
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
 catcsv(){
-    column -t -s, -n "$@" | less -F -S -X -K
+	cat $1 | sed 's/,/ ,/g' | column -t -s, | less -S
 }
 includepath(){
 	export PATH=$PATH:$1

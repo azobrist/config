@@ -1,9 +1,8 @@
-.bash_aliases:12: # wrapit(){ 
 .bash_aliases:13: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
 .bash_aliases:14: # }
-.bash_aliases:15:+catcsv(){
-.bash_aliases:16:+    column -t -s, -n "$@" | less -F -S -X -K
-.bash_aliases:17:+}
+.bash_aliases:15: catcsv(){
+.bash_aliases:16:-    column -t -s, -n "$@" | less -F -S -X -K
+.bash_aliases:16:+	cat $1 | sed 's/,/ ,/g' | column -t -s, | less -S
+.bash_aliases:17: }
 .bash_aliases:18: includepath(){
 .bash_aliases:19: 	export PATH=$PATH:$1
-.bash_aliases:20: }
