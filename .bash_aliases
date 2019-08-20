@@ -8,7 +8,7 @@ alias brc='source ~/.bashrc'
 alias gitfilehist='git log -p --'
 alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
-alias ssgrep='grep -A 100 -B 10'
+alias firstgrep='grep -A 100 -B 10 -m 1'
 source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
