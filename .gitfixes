@@ -1,7 +1,8 @@
 .bash_aliases:8: alias gitfilehist='git log -p --'
 .bash_aliases:9: alias gitaligntoremote='git reset --hard @{u}'
 .bash_aliases:10: alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
-.bash_aliases:11:-alias firstgrep='grep -A 100 -B 10 -m 1'
-.bash_aliases:11: source ~/config/auto.bash
-.bash_aliases:12: # wrapit(){ 
-.bash_aliases:13: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
+.bash_aliases:11:+alias pip=pip3
+.bash_aliases:12:+alias python=python3
+.bash_aliases:13: source ~/config/auto.bash
+.bash_aliases:14: # wrapit(){ 
+.bash_aliases:15: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
