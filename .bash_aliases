@@ -80,8 +80,12 @@ gitlocalcreate(){
 	gitfixes
 }
 startproject(){
-	name=$(basename $(pwd))
-	githubcreate $name
+	if [ $# -eq 1 ]; then
+		name=$1
+	else
+		name=$(basename $(pwd))
+	fi
+	githubcreatepublic $name
 	if [ $? -ne 0 ]; then
 		git init
 		git remote add origin git@github.com:azobrist/$name.git
@@ -90,12 +94,21 @@ startproject(){
 		echo "failed to create github repo, local project untouched"
 	fi
 }
-githubcreate(){
+githubcreateprivate(){
 	repo_name=$1
 	test -z $repo_name && echo "Repo name required." 1>&2
 	if [ $? -ne 0 ]; then
 		echo "creating public repo $repo_name"
 		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\",\"private\":\"true\"}" | grep "Bad credentials\|Repository creation failed"	
+		return $?
+	fi
+}
+githubcreatepublic(){
+	repo_name=$1
+	test -z $repo_name && echo "Repo name required." 1>&2
+	if [ $? -ne 0 ]; then
+		echo "creating public repo $repo_name"
+		curl -u 'azobrist' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep "Bad credentials\|Repository creation failed"	
 		return $?
 	fi
 }
@@ -115,7 +128,7 @@ gitsmartcommit(){
 	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
 	git add .gitfixes
 	FILES=$(git diff --name-only --staged)
-	STR=$'files modified - add descriptions as needed or see .gitfixes for all modifications\n'
+	STR=$'files modified - see .gitfixes for all modifications\n'
 	git commit -m "$STR$FILES"
 	if [ $? -eq 0 ]; then
 		git commit --amend
