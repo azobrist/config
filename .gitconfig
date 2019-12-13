@@ -19,3 +19,4 @@
 [core]
 	autocrlf = false
 	whitespace = cr-at-eol
+	filemode = false
