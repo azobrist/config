@@ -1,4 +1,5 @@
 set nu
+set ts=4 sw=4
 
 " autocmd vimenter * NERDTree
 map <C-t> :NERDTreeToggle<CR>
@@ -19,7 +20,8 @@ Plugin 'gmarik/Vundle.vim'
 " add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
 Plugin 'vim-scripts/indentpython.vim'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'morhetz/gruvbox'

@@ -1,45 +1,14 @@
-.bash_aliases:80: 	gitfixes
-.bash_aliases:81: }
-.bash_aliases:82: startproject(){
-.bash_aliases:83:-	name=$(basename $(pwd))
-.bash_aliases:83:-	githubcreate $name
-.bash_aliases:83:+	if [ $# -eq 1 ]; then
-.bash_aliases:84:+		name=$1
-.bash_aliases:85:+	else
-.bash_aliases:86:+		name=$(basename $(pwd))
-.bash_aliases:87:+	fi
-.bash_aliases:88:+	githubcreatepublic $name
-.bash_aliases:89: 	if [ $? -ne 0 ]; then
-.bash_aliases:90: 		git init
-.bash_aliases:91: 		git remote add origin git@github.com:azobrist/$name.git
-.bash_aliases:94: 		echo "failed to create github repo, local project untouched"
-.bash_aliases:95: 	fi
-.bash_aliases:96: }
-.bash_aliases:97:-githubcreate(){
-.bash_aliases:97:+githubcreateprivate(){
-.bash_aliases:98: 	repo_name=$1
-.bash_aliases:99: 	test -z $repo_name && echo "Repo name required." 1>&2
-.bash_aliases:100: 	if [ $? -ne 0 ]; then
-.bash_aliases:103: 		return $?
-.bash_aliases:104: 	fi
-.bash_aliases:105: }
-.bash_aliases:106:+githubcreatepublic(){
-.bash_aliases:107:+	repo_name=$1
-.bash_aliases:108:+	test -z $repo_name && echo "Repo name required." 1>&2
-.bash_aliases:109:+	if [ $? -ne 0 ]; then
-.bash_aliases:110:+		echo "creating public repo $repo_name"
-.bash_aliases:111:+		curl -u 'azobrist' https://api.github.com/user/repos -d "{"name":"$repo_name"}" | grep "Bad credentials|Repository creation failed"	
-.bash_aliases:112:+		return $?
-.bash_aliases:113:+	fi
-.bash_aliases:114:+}
-.bash_aliases:115: gitfixes(){
-.bash_aliases:116: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
-.bash_aliases:117: 	echo "Fixing $BRANCH"
-.bash_aliases:128: 	git diff --staged | diff-lines | sed /^.gitfixes/d > .gitfixes
-.bash_aliases:129: 	git add .gitfixes
-.bash_aliases:130: 	FILES=$(git diff --name-only --staged)
-.bash_aliases:131:-	STR=$'files modified - add descriptions as needed or see .gitfixes for all modificationsn'
-.bash_aliases:131:+	STR=$'files modified - see .gitfixes for all modificationsn'
-.bash_aliases:132: 	git commit -m "$STR$FILES"
-.bash_aliases:133: 	if [ $? -eq 0 ]; then
-.bash_aliases:134: 		git commit --amend
+.vimrc:1: set nu
+.vimrc:2:+set ts=4 sw=4
+.vimrc:3: 
+.vimrc:4: " autocmd vimenter * NERDTree
+.vimrc:5: map <C-t> :NERDTreeToggle<CR>
+.vimrc:20: " add all your plugins here (note older versions of Vundle
+.vimrc:21: " used Bundle instead of Plugin)
+.vimrc:22: Plugin 'vim-scripts/indentpython.vim'
+.vimrc:23:-Bundle 'Valloric/YouCompleteMe'
+.vimrc:23:+"Bundle 'Valloric/YouCompleteMe'
+.vimrc:24:+Plugin 'Shougo/neocomplete.vim'
+.vimrc:25: Plugin 'scrooloose/syntastic'
+.vimrc:26: Plugin 'scrooloose/nerdtree'
+.vimrc:27: Plugin 'morhetz/gruvbox'
