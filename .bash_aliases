@@ -10,6 +10,7 @@ alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 alias pip=pip3
 alias python=python3
+alias psa='ps aux | grep'
 source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
@@ -17,7 +18,7 @@ source ~/config/auto.bash
 catcsv(){
 	cat $1 | sed 's/,/ ,/g' | column -t -s, 
 }
-includepath(){
+exportpath(){
 	export PATH=$PATH:$1
 }
 bincmp(){
