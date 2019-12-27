@@ -7,6 +7,6 @@ silversearcher-ag
 net-tools
 gparted
 openssh-server
-minicom
+lsb_release
 pv
 colordiff
