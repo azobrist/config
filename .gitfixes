@@ -1,0 +1,29 @@
+.bash_aliases:11: alias pip=pip3
+.bash_aliases:12: alias python=python3
+.bash_aliases:13: alias psa='ps aux | grep'
+.bash_aliases:14:+alias workdir='basename $(pwd)'
+.bash_aliases:15: source ~/config/auto.bash
+.bash_aliases:16: # wrapit(){ 
+.bash_aliases:17: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
+.bash_aliases:63: 	fi
+.bash_aliases:64: 	cd $1
+.bash_aliases:65: }
+.bash_aliases:66:-gitlocalcreate(){
+.bash_aliases:66:+gitworkcreate(){
+.bash_aliases:67: 	if [ ! -f ~/netdevlist/gitwork ]; then
+.bash_aliases:68:-		echo "need to add local network to netdevlist"
+.bash_aliases:68:+		echo "need to add local server network to netdevlist"
+.bash_aliases:69: 		return
+.bash_aliases:70: 	fi
+.bash_aliases:71: 	name=$(basename $(pwd))
+.bash_aliases:139: 		git co -- .gitfixes
+.bash_aliases:140: 	fi
+.bash_aliases:141: }
+.bash_aliases:142:-gitcommit(){
+.bash_aliases:142:+gitpushcommit(){
+.bash_aliases:143:+	if [ $# -eq 0 ]; then
+.bash_aliases:144:+		echo "need to give commit msg"
+.bash_aliases:145:+	fi
+.bash_aliases:146: 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
+.bash_aliases:147: 	echo "Finishing $BRANCH"
+.bash_aliases:148: 	git add .
