@@ -1,2 +1,5 @@
 #/usr/bin/env bash
-complete -W "$(ls ~/netdevlist/)" connect getfrom sendto
+LIST=~/.netdevlist
+if [ -d $LIST ]; then
+	complete -W "$(ls $LIST)" connect getfrom sendto
+fi
