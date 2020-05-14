@@ -11,6 +11,7 @@ alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 alias pip=pip3
 alias python=python3
 alias psa='ps aux | grep'
+alias workdir='basename $(pwd)'
 source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
@@ -62,9 +63,9 @@ clonegithub(){
 	fi
 	cd $1
 }
-gitlocalcreate(){
+gitworkcreate(){
 	if [ ! -f ~/netdevlist/gitwork ]; then
-		echo "need to add local network to netdevlist"
+		echo "need to add local server network to netdevlist"
 		return
 	fi
 	name=$(basename $(pwd))
@@ -138,7 +139,10 @@ gitsmartcommit(){
 		git co -- .gitfixes
 	fi
 }
-gitcommit(){
+gitpushcommit(){
+	if [ $# -eq 0 ]; then
+		echo "need to give commit msg"
+	fi
 	BRANCH=$(git st | awk '{for(i=1;i<=NF;i++)if($(i-1)=="On"&&$i=="branch")print $(i+1)}')
 	echo "Finishing $BRANCH"
 	git add .
