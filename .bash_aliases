@@ -220,7 +220,7 @@ getfrom(){
 	LOC=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $LOC"
 	if [ "$(knockknock $LOC)" == "who's there??" ];then
-		rsync -aP $OPT . $LOC:$2
+		rsync -aP $OPT $LOC:$2 .
 	else
 		echo "Sever not online $LOC"
 	fi

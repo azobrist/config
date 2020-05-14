@@ -1,0 +1,8 @@
+.bash_aliases:220: 	LOC=$(cat ~/netdevlist/$DEV)
+.bash_aliases:221: 	echo "getting $2 from $LOC"
+.bash_aliases:222: 	if [ "$(knockknock $LOC)" == "who's there??" ];then
+.bash_aliases:223:-		rsync -aP $OPT . $LOC:$2
+.bash_aliases:223:+		rsync -aP $OPT $LOC:$2 .
+.bash_aliases:224: 	else
+.bash_aliases:225: 		echo "Sever not online $LOC"
+.bash_aliases:226: 	fi
