@@ -20,3 +20,4 @@
 	autocrlf = false
 	whitespace = cr-at-eol
 	filemode = false
+	eol = lf

@@ -1,15 +1,16 @@
-.bash_aliases:10: alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
-.bash_aliases:11: alias pip=pip3
-.bash_aliases:12: alias python=python3
-.bash_aliases:13:+alias psa='ps aux | grep'
-.bash_aliases:14: source ~/config/auto.bash
-.bash_aliases:15: # wrapit(){ 
-.bash_aliases:16: # 	echo $("$1" | tr --delete 'n') #sed '$!s/$/ \/' 
-.bash_aliases:18: catcsv(){
-.bash_aliases:19: 	cat $1 | sed 's/,/ ,/g' | column -t -s, 
-.bash_aliases:20: }
-.bash_aliases:21:-includepath(){
-.bash_aliases:21:+exportpath(){
-.bash_aliases:22: 	export PATH=$PATH:$1
-.bash_aliases:23: }
-.bash_aliases:24: bincmp(){
+.bash_aliases:213: 	fi
+.bash_aliases:214: 	DEV=$1
+.bash_aliases:215: 	OPT=$3
+.bash_aliases:216:-	LOC=$(cat ~/netdevlist/$DEV):$2
+.bash_aliases:216:+	LOC=$(cat ~/netdevlist/$DEV)
+.bash_aliases:217: 	echo "getting $2 from $LOC"
+.bash_aliases:218: 	if [ "$(knockknock $LOC)" == "who's there??" ];then
+.bash_aliases:219:-		scp $OPT $LOC .
+.bash_aliases:219:+		rsync -aP $OPT . $LOC:$2
+.bash_aliases:220: 	else
+.bash_aliases:221: 		echo "Sever not online $LOC"
+.bash_aliases:222: 	fi
+.gitconfig:20: 	autocrlf = false
+.gitconfig:21: 	whitespace = cr-at-eol
+.gitconfig:22: 	filemode = false
+.gitconfig:23:+	eol = lf

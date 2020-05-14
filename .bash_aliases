@@ -213,10 +213,10 @@ getfrom(){
 	fi
 	DEV=$1
 	OPT=$3
-	LOC=$(cat ~/netdevlist/$DEV):$2
+	LOC=$(cat ~/netdevlist/$DEV)
 	echo "getting $2 from $LOC"
 	if [ "$(knockknock $LOC)" == "who's there??" ];then
-		scp $OPT $LOC .
+		rsync -aP $OPT . $LOC:$2
 	else
 		echo "Sever not online $LOC"
 	fi
