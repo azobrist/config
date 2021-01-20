@@ -229,7 +229,7 @@ sendto(){
 	DEV=$1
 	LOC=$(cat ~/netdevlist/$DEV)
 	USR=$(echo $LOC | sed 's/@.*//')
-	FILE=${2##*/}
+	FILE=${2}
 	DEST=$LOC:/home/$USR/$2
 	echo "sending $FILE to $DEST"	
 	if [ "$(knockknock $LOC)" == "who's there??" ];then
