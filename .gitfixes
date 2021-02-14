@@ -1,8 +1,0 @@
-.bash_aliases:229: 	DEV=$1
-.bash_aliases:230: 	LOC=$(cat ~/netdevlist/$DEV)
-.bash_aliases:231: 	USR=$(echo $LOC | sed 's/@.*//')
-.bash_aliases:232:-	FILE=${2##*/}
-.bash_aliases:232:+	FILE=${2}
-.bash_aliases:233: 	DEST=$LOC:/home/$USR/$2
-.bash_aliases:234: 	echo "sending $FILE to $DEST"	
-.bash_aliases:235: 	if [ "$(knockknock $LOC)" == "who's there??" ];then
