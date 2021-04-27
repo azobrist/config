@@ -1,8 +1,18 @@
-.bash_aliases:229: 	DEV=$1
-.bash_aliases:230: 	LOC=$(cat ~/netdevlist/$DEV)
-.bash_aliases:231: 	USR=$(echo $LOC | sed 's/@.*//')
-.bash_aliases:232:-	FILE=${2##*/}
-.bash_aliases:232:+	FILE=${2}
-.bash_aliases:233: 	DEST=$LOC:/home/$USR/$2
-.bash_aliases:234: 	echo "sending $FILE to $DEST"	
-.bash_aliases:235: 	if [ "$(knockknock $LOC)" == "who's there??" ];then
+::-		git diff $1 $2 | diff-lines
+:1:+		git diff $1 $2 --color=always | diff-lines
+:2:-		git diff $1 | diff-lines
+:3:+		git diff $1 --color=always | diff-lines
+:4:-		git diff | diff-lines
+:5:+		git diff --color=always | diff-lines
+::-        elif [[ $REPLY =~ @@ -[0-9]+(,[0-9]+)? +([0-9]+)(,[0-9]+)? @@.* ]]; then
+:1:+        elif [[ $REPLY =~ "@@ -[0-9]+(,[0-9]+)? +([0-9]+)(,[0-9]+)? @@.*" ]]; then
+:2:-        elif [[ $REPLY =~ ^($esc[[0-9;]+m)*([ +-]) ]]; then
+:3:+        elif [[ $REPLY =~ "^($esc[[0-9;]+m)*([ +-])" ]]; then
+::-.bash_aliases:229: 	DEV=$1
+:1:-.bash_aliases:230: 	LOC=$(cat ~/netdevlist/$DEV)
+:2:-.bash_aliases:231: 	USR=$(echo $LOC | sed 's/@.*//')
+:3:-.bash_aliases:232:-	FILE=${2##*/}
+:4:-.bash_aliases:232:+	FILE=${2}
+:5:-.bash_aliases:233: 	DEST=$LOC:/home/$USR/$2
+:6:-.bash_aliases:234: 	echo "sending $FILE to $DEST"
+:7:-.bash_aliases:235: 	if [ "$(knockknock $LOC)" == "who's there??" ];then

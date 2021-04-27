@@ -279,11 +279,11 @@ aptaddtool(){
 }
 gitlinediff() {
 	if [ $# -eq 2 ]; then
-		git diff $1 $2 | diff-lines
+		git diff $1 $2 --color=always | diff-lines
 	elif [ $# -eq 1 ]; then
-		git diff $1 | diff-lines
+		git diff $1 --color=always | diff-lines
 	else
-		git diff | diff-lines
+		git diff --color=always | diff-lines
 	fi
 }
 diff-lines() {
@@ -291,13 +291,13 @@ diff-lines() {
     local line=
     while read; do
         esc=$'\033'
-        if [[ $REPLY =~ ---\ (a/)?.* ]]; then
+        if [[ $REPLY =~ "---\ (a/)?.*" ]]; then
             continue
-        elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
+        elif [[ $REPLY =~ "\+\+\+\ (b/)?([^[:blank:]$esc]+).*" ]]; then
             path=${BASH_REMATCH[2]}
-        elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
+        elif [[ $REPLY =~ "@@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.*" ]]; then
             line=${BASH_REMATCH[2]}
-        elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
+        elif [[ $REPLY =~ "^($esc\[[0-9;]+m)*([\ +-])" ]]; then
             echo "$path:$line:$REPLY"
             if [[ ${BASH_REMATCH[2]} != - ]]; then
                 ((line++))

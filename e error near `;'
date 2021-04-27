@@ -1,0 +1,22 @@
+[1mdiff --git a/.bash_aliases b/.bash_aliases[m
+[1mindex db1b4f3..42c7161 100644[m
+[1m--- a/.bash_aliases[m
+[1m+++ b/.bash_aliases[m
+[36m@@ -291,13 +291,13 @@[m [mdiff-lines() {[m
+     local line=[m
+     while read; do[m
+         esc=$'\033'[m
+[31m-        if [[ $REPLY =~ ---\ (a/)?.* ]]; then[m
+[32m+[m[32m        if [[ "$REPLY" =~ "---\ (a/)?.*" ]]; then[m
+             continue[m
+[31m-        elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then[m
+[32m+[m[32m        elif [[ "$REPLY" =~ "\+\+\+\ (b/)?([^[:blank:]$esc]+).*" ]]; then[m
+             path=${BASH_REMATCH[2]}[m
+[31m-        elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then[m
+[32m+[m[32m        elif [[ "$REPLY" =~ "@@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.*" ]]; then[m
+             line=${BASH_REMATCH[2]}[m
+[31m-        elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then[m
+[32m+[m[32m        elif [[ "$REPLY" =~ "^($esc\[[0-9;]+m)*([\ +-])" ]]; then[m
+             echo "$path:$line:$REPLY"[m
+             if [[ ${BASH_REMATCH[2]} != - ]]; then[m
+                 ((line++))[m
