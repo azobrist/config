@@ -7,6 +7,12 @@ then
 	exit 1
 fi
 
+#check if zsh is used
+if [ -f ~/.zshrc ]
+then
+	echo "source $HOME/.bash_aliases" >> ~/.zshrc
+fi
+
 #continue
 mkdir old
 cd ~
