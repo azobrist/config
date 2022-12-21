@@ -10,6 +10,7 @@ alias gitaligntoremote='git reset --hard @{u}'
 alias notetake='vim $(date +%d-%m-%Y_%H%M%S)'
 alias pip=pip3
 alias python=python3
+alias py=python3.10
 alias psa='ps aux | grep'
 alias workdir='basename $(pwd)'
 alias gitdiffside='git -c delta.side-by-side=true show'
@@ -17,6 +18,7 @@ source ~/config/auto.bash
 # wrapit(){ 
 # 	echo $("$1" | tr --delete '\n') #sed '$!s/$/ \\/' 
 # }
+transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>">&2;return 1;fi;if tty -s;then file="$1";file_name=$(basename "$file");if [ ! -e "$file" ];then echo "$file: No such file or directory">&2;return 1;fi;if [ -d "$file" ];then file_name="$file_name.zip" ,;(cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,;else cat "$file"|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;else file_name=$1;curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;}
 catcsv(){
 	cat $1 | sed 's/,/ ,/g' | column -t -s, 
 }
