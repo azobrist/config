@@ -11,6 +11,7 @@ fi
 if [ -f ~/.zshrc ]
 then
 	echo "source $HOME/.bash_aliases" >> ~/.zshrc
+	echo "source $HOME/.zsh_plugins" >> ~/.zshrc
 fi
 
 #continue
@@ -36,8 +37,15 @@ then
 	mv $FILE config/old/$FILE
 fi
 ln -s config/$FILE .
-cd config
 
+FILE=.zsh_plugins
+if [ -f "$FILE" ]
+then
+	mv $FILE config/old/$FILE
+fi
+ln -s config/$FILE .
+
+cd config
 touch $INIT
 exec bash
 
