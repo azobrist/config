@@ -10,6 +10,7 @@ fi
 #check if zsh is used
 if [ -f ~/.zshrc ]
 then
+	echo "ZSH_THEME=powerlevel10k/powerlevel10k" >> ~/.zshrc
 	echo "source $HOME/.bash_aliases" >> ~/.zshrc
 	echo "source $HOME/.zsh_plugins" >> ~/.zshrc
 fi
