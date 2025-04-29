@@ -15,7 +15,5 @@ revert () {
 #continue
 revert .bash_aliases
 revert .gitconfig
-revert .vimrc
-revert .zshrc
 rm -r original
 rm $TAG

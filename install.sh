@@ -7,12 +7,33 @@ then
 	exit 1
 fi
 
-#check if zsh is used
-if [ -f ~/.zshrc ]
+# Update package lists
+sudo apt-get update
+
+# Install packages listed in the apttools file
+while read -r package; do
+    if [[ ! -z "$package" && ! "$package" =~ ^# ]]; then
+        echo "Installing $package..."
+        sudo apt-get install -y "$package"
+    fi
+done < /home/az/config/apttools
+
+echo "All packages installed!"
+
+# Install and configure Starship
+if ! command -v starship &> /dev/null
 then
-	echo "ZSH_THEME=powerlevel10k/powerlevel10k" >> ~/.zshrc
-	echo "source $HOME/.bash_aliases" >> ~/.zshrc
-	echo "source $HOME/.zsh_plugins" >> ~/.zshrc
+    echo "Installing Starship..."
+    curl -fsSL https://starship.rs/install.sh | sh
+fi
+
+# Add Starship configuration to shell profiles
+echo 'eval "$(starship init bash)"' >> ~/.bashrc
+
+# Ensure .config directory exists and move starship.toml into it
+mkdir -p ~/.config
+if [ -f starship.toml ]; then
+    mv starship.toml ~/.config/
 fi
 
 # backup and link
@@ -27,8 +48,6 @@ bal () {
 
 bal .bash_aliases
 bal .gitconfig
-bal .vimrc
-bal .zsh_plugins
 
 touch $TAG
 exec bash

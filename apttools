@@ -1,12 +1,12 @@
 vim
-terminator
 git
 tldr
 inxi
 silversearcher-ag
 net-tools
-gparted
+usbutils
 openssh-server
 lsb_release
 pv
 colordiff
+tmux
